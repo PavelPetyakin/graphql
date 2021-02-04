@@ -1,0 +1,164 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "es2020": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:promise/recommended",
+    "plugin:sonarjs/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jsx-a11y/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json",
+    "tsconfigRootDir": ".",
+    "ecmaVersion": 2020,
+    "lib": ["es2020"],
+    "createDefaultProgram": false
+  },
+  "plugins": [
+    "react",
+    "react-hooks",
+    "promise",
+    "optimize-regex",
+    "sonarjs",
+    "@typescript-eslint",
+    "simple-import-sort",
+    "jsx-a11y"
+  ],
+  "rules": {
+    "no-undef": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "react/prop-types": "off",
+    "promise/always-return": "warn",
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "simple-import-sort/imports": [
+      "error",
+      {
+        "groups": [
+          ["^react", "^@?\\w"],
+          ["vendors", "^\\u0000"],
+          // folders in src
+          ["src", "^api|^assets|^components|^hooks|^layouts|^routers"],
+          ["up deps", "../"],
+          ["down deps", "./"],
+          ["styles", ".css"]
+        ]
+      }
+    ],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "prefer-const": "error",
+    "no-shadow": ["warn", { "builtinGlobals": true }],
+    "no-duplicate-imports": ["error", { "includeExports": true }],
+    // eslint
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "ExportDefaultDeclaration",
+        "message": "Prefer named exports"
+      }
+    ],
+    "prefer-destructuring": [
+      "warn",
+      {
+        "VariableDeclarator": {
+          "array": true,
+          "object": true
+        },
+        "AssignmentExpression": {
+          "array": true,
+          "object": true
+        }
+      },
+      {
+        "enforceForRenamedProperties": true
+      }
+    ],
+
+    // typescript
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": true
+        }
+      }
+    ],
+    "@typescript-eslint/no-magic-numbers": [
+      "error",
+      {
+        "ignoreNumericLiteralTypes": true,
+        "ignoreEnums": true,
+        "enforceConst": true,
+        "ignoreReadonlyClassProperties": true,
+        "ignore": [-1, 0, 1, 2]
+      }
+    ],
+
+    // react
+    "react/jsx-handler-names": [
+      "warn",
+      {
+        "eventHandlerPrefix": "(handle|on)",
+        "eventHandlerPropPrefix": "on",
+        "checkLocalVariables": true,
+        "checkInlineFunction": true
+      }
+    ],
+    "react/no-children-prop": "warn",
+    "react/function-component-definition": [
+      "warn",
+      {
+        "namedComponents": "function-declaration",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": true
+      }
+    ],
+    "react/style-prop-object": ["error"],
+
+    //jsx
+    "react/jsx-key": ["error", { "checkFragmentShorthand": true }],
+
+    // react-hooks
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "overrides": [
+    {
+      // enable the rule specifically for TypeScript files
+      "files": ["*.ts"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": ["warn", { "allowExpressions": true }]
+      }
+    },
+    {
+      "files": ["webpack/**"],
+      "env": { "node": true },
+      "rules": {
+        "simple-import-sort/imports": "off",
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    }
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
