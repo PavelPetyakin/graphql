@@ -7,5 +7,5 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 5000
+EXPOSE 4005
 CMD [ "node", "src/index.ts" ]
