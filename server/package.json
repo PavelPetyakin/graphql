@@ -2,14 +2,28 @@
   "name": "server",
   "version": "0.0.1",
   "description": "server example",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "author": "Pavel Petyakin",
   "license": "MIT",
+  "engines": {
+    "node": "15.8.0",
+    "npm": "7.5.1",
+    "yarn": "1.22.10"
+  },
   "scripts": {
-    "server": "node src/index.ts"
+    "dev": "nodemon src/index.ts --exec ts-node",
+    "prod": "tsc && node dist/index.js"
   },
   "dependencies": {
-    "apollo-server": "^2.19.2",
-    "graphql": "^15.5.0"
+    "apollo-server": "^2.21.0",
+    "graphql": "^15.5.0",
+    "graphql-tools": "^7.0.4",
+    "typeorm": "^0.2.31"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.31",
+    "nodemon": "^2.0.7",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.5"
   }
 }

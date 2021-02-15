@@ -1,5 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ErrorBoundary } from 'pages';
+
+import { client } from 'api/client';
+
+import { ApolloProvider } from '@apollo/client';
 
 import { App } from './App';
 import { reportWebVitals } from './reportWebVitals';
@@ -7,9 +12,13 @@ import { reportWebVitals } from './reportWebVitals';
 import './index.css';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <ErrorBoundary>
+    <React.StrictMode>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </React.StrictMode>
+  </ErrorBoundary>,
   document.getElementById('root')
 );
 

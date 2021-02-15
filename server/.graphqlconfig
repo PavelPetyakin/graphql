@@ -1,0 +1,16 @@
+{
+  "name": "GraphQL Schema",
+  "schemaPath": "./src/types/schema.graphql",
+  "documents": "./src/types/**/*.graphql",
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "http://localhost:4005/",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": false
+      }
+    }
+  }
+}

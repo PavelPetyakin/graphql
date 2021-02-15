@@ -1,0 +1,8 @@
+type Query {
+  persons: Persons
+  orders: Orders
+}
+
+schema {
+  query: Query
+}

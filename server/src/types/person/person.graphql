@@ -1,0 +1,12 @@
+type Person {
+  id: ID!
+  name: String
+  surname: String
+  orders: [Oreder]
+}
+
+type Persons {
+  people: [Person]
+  amount: Int
+  person(id: ID!): Person
+}

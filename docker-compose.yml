@@ -17,7 +17,7 @@ services:
     networks:
       - record-net
     environment:
-      POSTGRES_DB: journal_api
+      POSTGRES_DB: test_db
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
     ports:
