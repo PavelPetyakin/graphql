@@ -1,8 +1,8 @@
-import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { AboutPage, HomePage } from "pages";
 
-import './App.css';
+import "./App.css";
 
 export function App() {
   return (

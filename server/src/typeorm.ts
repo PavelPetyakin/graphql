@@ -1,4 +1,4 @@
-import { createConnection } from 'typeorm';
+import {createConnection} from 'typeorm';
 import path from 'path';
 
 export async function connect() {
@@ -8,7 +8,7 @@ export async function connect() {
     port: 5432,
     username: 'root',
     password: 'password',
-    database: 'test_db',
+    database: 'graphql',
     entities: [
       path.join(__dirname, '../entity/**/**.ts')
     ]

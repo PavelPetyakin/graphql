@@ -15,5 +15,5 @@ const orders = [
 
 export const resolver = {
   orders: () => orders,
-  order: (parent: {id: string}) => orders.find(o => o.id === parent.id),
+  order: (parent: { id: string }) => orders.find(o => o.id === parent.id),
 };

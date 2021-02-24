@@ -1,4 +1,4 @@
 package.json
-dist
+build/*
 src/assets
 src/app.tsx

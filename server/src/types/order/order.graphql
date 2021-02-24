@@ -1,9 +1,9 @@
-type Oreder {
+type Order {
   id: ID!
   description: String
 }
 
 type Orders {
-  orders: [Oreder]
-  order(id: ID!): Oreder
+  orders: [Order]
+  order(id: ID!): Order
 }

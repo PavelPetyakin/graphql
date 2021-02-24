@@ -1,9 +1,9 @@
 import React from "react";
 
-import { useDocumentTitle } from 'hooks';
+import { useDocumentTitle } from "hooks";
 
 export function AboutPage() {
-  useDocumentTitle('About');
+  useDocumentTitle("About");
 
   return (
     <div>AboutPage</div>

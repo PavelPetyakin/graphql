@@ -1,15 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { ErrorBoundary } from 'pages';
+import React from "react";
+import ReactDOM from "react-dom";
+import { ErrorBoundary } from "pages";
 
-import { client } from 'api/client';
+import { client } from "api/client";
 
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from "@apollo/client";
 
-import { App } from './App';
-import { reportWebVitals } from './reportWebVitals';
+import { App } from "./App";
+import { reportWebVitals } from "./reportWebVitals";
 
-import './index.css';
+import "./index.css";
 
 ReactDOM.render(
   <ErrorBoundary>
@@ -19,7 +19,7 @@ ReactDOM.render(
       </ApolloProvider>
     </React.StrictMode>
   </ErrorBoundary>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
