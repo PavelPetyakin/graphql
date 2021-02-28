@@ -11,9 +11,9 @@ const EXCHANGE_RATES = gql`
         id
         name
         surname
-        orders {
-          description
-        }
+#        orders {
+#          description
+#        }
       }
     }
   }

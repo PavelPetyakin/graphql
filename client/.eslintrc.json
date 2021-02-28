@@ -35,6 +35,16 @@
   ],
   "rules": {
     "no-undef": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 80,
+        "tabWidth": 2,
+        "ignoreUrls": true,
+        "ignoreTemplateLiterals": true,
+        "comments": 65
+      }
+    ],
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/prop-types": "off",
     "promise/always-return": "warn",
@@ -82,6 +92,7 @@
         "enforceForRenamedProperties": true
       }
     ],
+    "react/jsx-curly-brace-presence": [ "error", { "props": "never", "children": "never" }],
 
     // typescript
     "@typescript-eslint/naming-convention": [

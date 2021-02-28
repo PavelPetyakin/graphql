@@ -1,8 +1,12 @@
-interface IPerson {
-  id: string;
+import { getPeople, getPeopleAmount, getPerson } from "./service";
+
+export interface IPerson {
+  id: number;
   name?: string;
   surname?: string;
-  orders?: IOrder[];
+  email?: string;
+  created?: string;
+  // orders?: IOrder[];
 }
 
 interface IOrder {
@@ -10,44 +14,8 @@ interface IOrder {
   description?: string;
 }
 
-const people = [
-  {
-    id: '1',
-    name: 'Kate',
-    surname: 'Sorokina',
-    orders: [
-      {
-        id: '2',
-        description: 'second order',
-      }
-    ],
-  },
-  {
-    id: '2',
-    name: 'Paul',
-    surname: 'Petyakin',
-    orders: [
-      {
-        id: '3',
-        description: 'third order',
-      }
-    ],
-  },
-  {
-    id: '3',
-    name: 'Ivan',
-    surname: 'Vasiliev',
-    orders: [
-      {
-        id: '1',
-        description: 'first order',
-      }
-    ],
-  },
-];
-
 export const resolver = {
-  people: () => people,
-  amount: () => people.length,
-  person: (parent: {id: string}) => people.find(p => p.id === parent.id),
+  people: async (parent: any): Promise<IPerson[]> => getPeople(parent),
+  amount: async (): Promise<number> => getPeopleAmount(),
+  person: async (parent: {id: string}): Promise<IPerson> => getPerson(parent),
 };

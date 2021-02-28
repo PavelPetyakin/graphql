@@ -1,0 +1,19 @@
+type Translation {
+  id: ID!
+  type: String!
+  english: String!
+  transcription: String!
+  russian: String!
+  english_example: String
+  russian_example: String
+}
+
+enum WordsCategory {
+  TIME
+  ANIMAL
+  WEEKDAY
+}
+
+type Translations {
+  translation(type: [WordsCategory!]!): [Translation!]!
+}

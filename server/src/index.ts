@@ -1,6 +1,15 @@
 import { ApolloServer } from 'apollo-server';
 import { loadFiles } from 'graphql-tools';
 import { resolvers } from './types/resolvers';
+import { Client } from 'pg';
+
+export const client = new Client({
+  host: "localhost",
+  port: 5432,
+  user: "",
+  password: "",
+  database: "graphql",
+});
 
 // @ts-ignore
 // const typeDefs = await loadFiles('./src/**/**/*.graphql');
@@ -23,6 +32,7 @@ import { resolvers } from './types/resolvers';
 
 (async () => {
   try {
+    await client.connect();
     const typeDefs = await loadFiles('./src/**/**/*.graphql');
     if(typeDefs !== undefined) {
       const server = new ApolloServer({

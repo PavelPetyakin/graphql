@@ -1,6 +1,7 @@
 type Order {
   id: ID!
   description: String
+  createdAt: String
 }
 
 type Orders {
