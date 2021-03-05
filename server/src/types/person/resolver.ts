@@ -1,4 +1,5 @@
 import { getPeople, getPeopleAmount, getPerson } from "./service";
+import { IOrder } from "../order/resolver";
 
 export interface IPerson {
   id: number;
@@ -6,16 +7,11 @@ export interface IPerson {
   surname?: string;
   email?: string;
   created?: string;
-  // orders?: IOrder[];
-}
-
-interface IOrder {
-  id: string;
-  description?: string;
+  orders?: IOrder[];
 }
 
 export const resolver = {
-  people: async (parent: any): Promise<IPerson[]> => getPeople(parent),
-  amount: async (): Promise<number> => getPeopleAmount(),
-  person: async (parent: {id: string}): Promise<IPerson> => getPerson(parent),
+  people: (parent: any): Promise<IPerson[]> => getPeople(parent),
+  amount: (): Promise<number> => getPeopleAmount(),
+  person: (parent: {id: string}): Promise<IPerson> => getPerson(parent),
 };

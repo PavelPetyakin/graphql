@@ -3,7 +3,7 @@ type Person {
   name: String
   surname: String
   email: String
-#  orders: [Order]
+  orders: [Order]
   created: String
 }
 

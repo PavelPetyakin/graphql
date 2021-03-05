@@ -30,7 +30,19 @@ export async function getPeopleAmount(): Promise<number> {
 
 export async function getPerson(parent: {id: string}): Promise<IPerson> {
   try {
-    const qText: string = "SELECT * FROM persons WHERE id = $1";
+    const qText: string = `
+      SELECT
+        "user"."id",
+        "user"."email",
+        "order"."id" AS "order_id",
+        "order"."description",
+        "user"."name",
+        "user"."surname",
+        "user"."created"
+      FROM persons AS "user"
+               LEFT JOIN orders AS "order" ON "user".id = "order".person_id
+      WHERE "user".id = $1
+    `;
     const qValue: string[] = [parent.id];
     return (await client.query(qText, qValue)).rows[0];
   } catch (err) {
