@@ -1,7 +1,9 @@
 import { ApolloServer } from 'apollo-server';
 import { loadFiles } from 'graphql-tools';
+import { GraphQLObjectType, GraphQLSchema, GraphQLString } from "graphql";
 import { resolvers } from './types/resolvers';
 import { Client } from 'pg';
+import { query } from './types/person/pesrson';
 
 export const client = new Client({
   host: "localhost",
@@ -9,6 +11,10 @@ export const client = new Client({
   user: "",
   password: "",
   database: "graphql",
+});
+
+const schema = new GraphQLSchema({
+  query: query
 });
 
 // @ts-ignore
@@ -36,8 +42,7 @@ export const client = new Client({
     const typeDefs = await loadFiles('./src/**/**/*.graphql');
     if(typeDefs !== undefined) {
       const server = new ApolloServer({
-        typeDefs,
-        resolvers,
+        schema,
 //     context: ({ req }) => console.log('context', req),
         playground: true,
       });
