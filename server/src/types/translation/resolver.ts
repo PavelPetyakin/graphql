@@ -17,8 +17,8 @@ export enum WordsCategory {
 }
 
 export const resolver = {
-  translation: (parent: { type: WordsCategory[] }): Promise<ITranslation[]> => {
-    return getTranslationList(parent);
+  translation: (type: WordsCategory[]): Promise<ITranslation[]> => {
+    return getTranslationList(type);
   },
 };
 

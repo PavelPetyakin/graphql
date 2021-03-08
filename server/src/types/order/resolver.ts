@@ -1,4 +1,4 @@
-import { getOrders, getOrder } from "./service";
+import { getOrders, getOrderById } from "./service";
 
 export interface IOrder {
   id: number;
@@ -8,5 +8,5 @@ export interface IOrder {
 
 export const resolver = {
   orders: (): Promise<IOrder[]> => getOrders(),
-  order: (parent: { id: string }): Promise<IOrder> => getOrder(parent),
+  order: (id: string): Promise<IOrder> => getOrderById(id),
 };

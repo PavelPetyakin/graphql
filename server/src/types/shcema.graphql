@@ -1,9 +1,0 @@
-type Query {
-  persons: Persons
-  orders: Orders
-  translations: Translations
-}
-
-schema {
-  query: Query
-}

@@ -1,9 +1,6 @@
 import { ApolloServer } from 'apollo-server';
-import { loadFiles } from 'graphql-tools';
-import { GraphQLObjectType, GraphQLSchema, GraphQLString } from "graphql";
-import { resolvers } from './types/resolvers';
 import { Client } from 'pg';
-import { query } from './types/person/pesrson';
+import { schema } from './types/shcema';
 
 export const client = new Client({
   host: "localhost",
@@ -12,13 +9,6 @@ export const client = new Client({
   password: "",
   database: "graphql",
 });
-
-const schema = new GraphQLSchema({
-  query: query
-});
-
-// @ts-ignore
-// const typeDefs = await loadFiles('./src/**/**/*.graphql');
 
 // const auth = async ({ request }) => {
 //   let user;
@@ -39,21 +29,17 @@ const schema = new GraphQLSchema({
 (async () => {
   try {
     await client.connect();
-    const typeDefs = await loadFiles('./src/**/**/*.graphql');
-    if(typeDefs !== undefined) {
-      const server = new ApolloServer({
-        schema,
+    const server = new ApolloServer({
+      schema,
 //     context: ({ req }) => console.log('context', req),
-        playground: true,
-      });
-      const { url } = await server.listen({
-        port: 4005,
-        endpoint: '/api',
-        playground: '/graphql'
-      });
-      console.log(`🚀  Server ready at ${url}graphql`);
-    }
-
+      playground: true,
+    });
+    const { url } = await server.listen({
+      port: 4005,
+      endpoint: '/api',
+      playground: '/graphql'
+    });
+    console.log(`🚀  Server ready at ${url}graphql`);
   } catch (e) {
     console.error("Server don't started", e);
   }

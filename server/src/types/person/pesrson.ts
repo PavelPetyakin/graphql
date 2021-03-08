@@ -2,22 +2,15 @@ import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLList,
-  GraphQLInt,
-  GraphQLNonNull, GraphQLFloat, GraphQLEnumType, GraphQLInputObjectType
+  GraphQLNonNull,
+  GraphQLEnumType,
+  GraphQLInputObjectType,
+  GraphQLID
 } from "graphql";
-import { getPeople, getPerson } from "./service";
-import { getOrder } from "../order/service";
-
-interface IPerson {
-  id: number;
-  name: string;
-  surname: string;
-  email: string;
-  created: Date;
-}
+import { order, getOrdersByUser } from "../order";
 
 const SortDirection = new GraphQLEnumType({
-  name: 'sort',
+  name: "sort",
   values: {
     ASC: { value: "ASC" },
     DESC: { value: "DESC" },
@@ -25,15 +18,15 @@ const SortDirection = new GraphQLEnumType({
 });
 
 const SortableField = new GraphQLEnumType({
-  name: 'sortBy',
+  name: "sortBy",
   values: {
     id: { value: "id" },
     created: { value: "created" },
   }
 });
 
-const Sorting = new GraphQLInputObjectType({
-  name: 'sorting',
+export const Sorting = new GraphQLInputObjectType({
+  name: "sorting",
   fields: {
     sort: { type: new GraphQLNonNull(SortDirection) },
     sortBy: { type: new GraphQLNonNull(SortableField) },
@@ -45,7 +38,7 @@ export const person: GraphQLObjectType = new GraphQLObjectType({
   description: "Some description",
   fields: () => ({
     id: {
-      type: new GraphQLNonNull(GraphQLInt),
+      type: new GraphQLNonNull(GraphQLID),
     },
     name: {
       type: GraphQLString,
@@ -58,46 +51,10 @@ export const person: GraphQLObjectType = new GraphQLObjectType({
     },
     orders: {
       type: new GraphQLList(order),
-      resolve: (parent) => getOrder(parent),
+      resolve: (parent) => getOrdersByUser(parent.id),
     },
     created: {
       type: GraphQLString,
     },
-  })
-})
-
-export const order: GraphQLObjectType = new GraphQLObjectType({
-  name: "Order",
-  description: "Some description",
-  fields: () => ({
-    id: {
-      type: new GraphQLNonNull(GraphQLInt),
-    },
-    description: {
-      type: GraphQLString,
-    },
-    created: {
-      type: GraphQLString,
-    },
-  })
-})
-
-export const query = new GraphQLObjectType({
-  name: 'Query',
-  fields: () => ({
-    user: {
-      type: person,
-      args: {
-        id: { type: GraphQLNonNull(GraphQLFloat) }
-      },
-      resolve: (_, {id}) => getPerson(id),
-    },
-    users: {
-      type: new GraphQLList(person),
-      args: {
-        sorting: { type: GraphQLNonNull(Sorting) }
-      },
-      resolve: (_, {sorting}) => getPeople(sorting),
-    }
   })
 })
