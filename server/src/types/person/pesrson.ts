@@ -2,11 +2,11 @@ import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLList,
-  GraphQLInt, GraphQLFieldConfigMap,
+  GraphQLInt,
   GraphQLNonNull, GraphQLFloat, GraphQLEnumType, GraphQLInputObjectType
 } from "graphql";
-import { Maybe } from "graphql/jsutils/Maybe";
 import { getPeople, getPerson } from "./service";
+import { getOrder } from "../order/service";
 
 interface IPerson {
   id: number;
@@ -33,7 +33,7 @@ const SortableField = new GraphQLEnumType({
 });
 
 const Sorting = new GraphQLInputObjectType({
-  name: 'GeoPoint',
+  name: 'sorting',
   fields: {
     sort: { type: new GraphQLNonNull(SortDirection) },
     sortBy: { type: new GraphQLNonNull(SortableField) },
@@ -42,37 +42,42 @@ const Sorting = new GraphQLInputObjectType({
 
 export const person: GraphQLObjectType = new GraphQLObjectType({
   name: "Person",
+  description: "Some description",
   fields: () => ({
     id: {
       type: new GraphQLNonNull(GraphQLInt),
-      // description: "user id",
-      // resolve: () => 2,
     },
     name: {
       type: GraphQLString,
-      // description: "user name",
-      // resolve: () => "Pavel",
     },
     surname: {
       type: GraphQLString,
-      // description: "user surname",
-      // resolve: () => "Petyakin",
     },
     email: {
       type: GraphQLString,
-      // description: "user email",
-      // resolve: () => "petakin86@mail.ru",
     },
     orders: {
-      // type: new GraphQLList(),
-      type: GraphQLString,
-      // description: "user email",
-      // resolve: () => "petakin86@mail.ru",
+      type: new GraphQLList(order),
+      resolve: (parent) => getOrder(parent),
     },
     created: {
       type: GraphQLString,
-      // description: "when created user card",
-      // resolve: () => "2021-3-7",
+    },
+  })
+})
+
+export const order: GraphQLObjectType = new GraphQLObjectType({
+  name: "Order",
+  description: "Some description",
+  fields: () => ({
+    id: {
+      type: new GraphQLNonNull(GraphQLInt),
+    },
+    description: {
+      type: GraphQLString,
+    },
+    created: {
+      type: GraphQLString,
     },
   })
 })

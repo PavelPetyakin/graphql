@@ -13,5 +13,5 @@ export interface IPerson {
 export const resolver = {
   people: (parent: any): Promise<IPerson[]> => getPeople(parent),
   amount: (): Promise<number> => getPeopleAmount(),
-  person: (parent: {id: string}): Promise<IPerson> => getPerson(parent),
+  person: (id: string): Promise<IPerson> => getPerson(id),
 };

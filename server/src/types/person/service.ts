@@ -5,15 +5,11 @@ export async function getPeople(sorting: any): Promise<IPerson[]> {
   try {
     let qText: string = "SELECT * FROM person ORDER BY created DESC";
     if (sorting) {
-      console.log('-- -- --')
       if (sorting.sortBy && sorting.sort) {
-        console.log('-- 1 --')
         qText = `SELECT * FROM person ORDER BY ${sorting.sortBy} ${sorting.sort}`;
       } else if (sorting.sortBy) {
-        console.log('-- 2 --')
         qText = `SELECT * FROM person ORDER BY ${sorting.sortBy}`;
       } else if (sorting.sort) {
-        console.log('-- 3 --')
         qText = `SELECT * FROM person ORDER BY ${sorting.sort}`;
       }
     }

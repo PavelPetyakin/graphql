@@ -10,11 +10,11 @@ export async function getOrders(): Promise<IOrder[]> {
   }
 }
 
-export async function getOrder(parent: {id: string}): Promise<IOrder> {
+export async function getOrder(parent: {id: string}): Promise<IOrder[]> {
   try {
-    const qText: string = "SELECT * FROM orders WHERE id = $1";
+    const qText: string = "SELECT * FROM orders o WHERE o.person_id = $1";
     const qValue: string[] = [parent.id];
-    return (await client.query(qText, qValue)).rows[0];
+    return (await client.query(qText, qValue)).rows;
   } catch (err) {
     throw new Error("Failed to find order");
   }
