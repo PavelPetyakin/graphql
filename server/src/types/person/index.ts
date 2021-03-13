@@ -1,4 +1,4 @@
 export { getPeople, getPeopleAmount, getPerson } from "./service";
-export { queryResolver } from "./resolver";
+export { queryResolver, mutationResolver } from "./resolver";
 export { person, Sorting } from "./pesrson";
-export { IPersonResolver, IPerson } from "./types";
+export { IPersonQueryResolver, IPersonMutationResolver, IPerson } from "./types";

@@ -7,7 +7,7 @@ import {
 
 export const order: GraphQLObjectType = new GraphQLObjectType({
   name: "Order",
-  description: "Person's orders",
+  description: "Customer's orders",
   fields: () => ({
     id: {
       type: new GraphQLNonNull(GraphQLID),

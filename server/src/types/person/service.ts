@@ -28,7 +28,7 @@ export async function getPeopleAmount(): Promise<number> {
   }
 }
 
-export async function getPerson(id: string): Promise<IPerson> {
+export async function getPerson(id: number): Promise<IPerson> {
   try {
     const qText: string = `
       SELECT
@@ -43,7 +43,7 @@ export async function getPerson(id: string): Promise<IPerson> {
                LEFT JOIN orders AS "order" ON "user".id = "order".person_id
       WHERE "user".id = $1
     `;
-    const qValue: string[] = [id];
+    const qValue: number[] = [id];
     return (await client.query(qText, qValue)).rows[0];
   } catch (err) {
     throw new Error("Failed to find person");

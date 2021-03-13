@@ -35,7 +35,7 @@ export const Sorting = new GraphQLInputObjectType({
 
 export const person: GraphQLObjectType = new GraphQLObjectType({
   name: "Person",
-  description: "Some description",
+  description: "Customer",
   fields: () => ({
     id: {
       type: new GraphQLNonNull(GraphQLID),

@@ -1,23 +1,27 @@
 import { IGraphQLFieldConfig } from "../shcema";
 import { IOrder } from "../order";
 
-export interface IPersonResolver {
+export interface IPersonQueryResolver {
   user: IGraphQLFieldConfig<Record<string, string>, IUserArgs>;
   users: IGraphQLFieldConfig<Record<string, string>, IUsersArgs>;
 }
 
+export interface IPersonMutationResolver {
+  addUser: IGraphQLFieldConfig<Record<string, string>, IAddUserArgs>;
+}
+
 export interface IPerson {
   id: number;
-  name?: string;
-  surname?: string;
-  email?: string;
-  created?: string;
+  name: string;
+  surname: string;
+  email: string;
+  created: string;
   orders?: IOrder[];
 }
 
-interface IUserArgs {
-  id: string;
-}
+interface IUserArgs extends Pick<IPerson, "id"> {}
+
+interface IAddUserArgs extends Pick<IPerson, "name" | "surname" | "email"> {}
 
 interface IUsersArgs {
   sorting: {
