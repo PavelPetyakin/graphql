@@ -1,17 +1,21 @@
-import { getPeople, getPeopleAmount, getPerson } from "./service";
-import { IOrder } from "../order/resolver";
+import { getPeople, getPerson } from "./service";
+import { person, Sorting } from "./pesrson";
+import { GraphQLFloat, GraphQLList, GraphQLNonNull } from "graphql";
+import { IPersonResolver, IPerson } from "./types";
 
-export interface IPerson {
-  id: number;
-  name?: string;
-  surname?: string;
-  email?: string;
-  created?: string;
-  orders?: IOrder[];
-}
-
-export const resolver = {
-  people: (parent: any): Promise<IPerson[]> => getPeople(parent),
-  amount: (): Promise<number> => getPeopleAmount(),
-  person: (id: string): Promise<IPerson> => getPerson(id),
+export const queryResolver: IPersonResolver = {
+  user: {
+    type: person,
+    args: {
+      id: { type: GraphQLNonNull(GraphQLFloat) }
+    },
+    resolve: (_parent, args, context, info): Promise<IPerson> => getPerson(args.id),
+  },
+  users: {
+    type: new GraphQLList(person),
+    args: {
+      sorting: { type: GraphQLNonNull(Sorting) }
+    },
+    resolve: (_parent, args, context, info): Promise<IPerson[]> => getPeople(args.sorting),
+  },
 };

@@ -1,4 +1,4 @@
-import { ITranslation, WordsCategory } from "./resolver";
+import { ITranslation, WordsCategory } from "./types";
 import { client } from "../../index";
 
 export async function getTranslationList(type: WordsCategory[]): Promise<ITranslation[]> {

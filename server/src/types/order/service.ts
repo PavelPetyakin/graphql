@@ -1,4 +1,4 @@
-import { IOrder } from "./resolver";
+import { IOrder } from "./types";
 import { client } from "../../index";
 
 export async function getOrders(): Promise<IOrder[]> {

@@ -1,4 +1,4 @@
-import { IPerson } from "./resolver";
+import { IPerson } from "./types";
 import { client } from "../../index";
 
 export async function getPeople(sorting: any): Promise<IPerson[]> {

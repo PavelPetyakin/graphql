@@ -1,24 +1,14 @@
 import { getTranslationList } from "./service";
+import { GraphQLList, GraphQLNonNull } from "graphql";
+import { translation, WordCategory } from "./translation";
+import { ITranslationResolver, ITranslation } from "./types";
 
-export interface ITranslation {
-  id: number;
-  type: string;
-  english: string;
-  transcription: string;
-  russian: string;
-  english_example: string;
-  russian_example: string;
-}
-
-export enum WordsCategory {
-  TIME = "TIME",
-  ANIMAL = "ANIMAL",
-  WEEKDAY = "WEEKDAY"
-}
-
-export const resolver = {
-  translation: (type: WordsCategory[]): Promise<ITranslation[]> => {
-    return getTranslationList(type);
+export const queryResolver: ITranslationResolver = {
+  translation: {
+    type: new GraphQLList(translation),
+    args: {
+      type: { type: GraphQLNonNull(GraphQLList(GraphQLNonNull(WordCategory))) }
+    },
+    resolve: (_parent, args): Promise<ITranslation[]> => getTranslationList(args.type),
   },
 };
-

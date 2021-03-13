@@ -1,50 +1,28 @@
-import {
-  GraphQLFloat,
-  GraphQLList,
-  GraphQLNonNull,
-  GraphQLObjectType,
-  GraphQLSchema
-} from "graphql";
-import { person, Sorting, getPeople, getPerson } from "./person";
-import { order, getOrderById, getOrders } from "./order";
-import { translation, WordCategory, getTranslationList } from "./translation";
+import { GraphQLObjectType, GraphQLSchema } from "graphql";
+import { queryResolver as personResolver } from "./person";
+import { queryResolver as orderResolver } from "./order";
+import { queryResolver as translationResolver } from "./translation";
+import { GraphQLFieldConfig } from "graphql/type/definition";
+import { IPersonResolver } from "./person";
+import { IOrderResolver } from "./order";
+import { ITranslationResolver } from "./translation";
 
-export const query = new GraphQLObjectType({
+export interface IContext {
+
+}
+export interface IGraphQLFieldConfig<TSource, TArgs> extends GraphQLFieldConfig<TSource, IContext, TArgs> {}
+type Resolvers = IPersonResolver | IOrderResolver | ITranslationResolver;
+export type IGraphQLFieldConfigMap = {
+  [Prop in keyof Resolvers]: Resolvers[Prop];
+}
+
+export const query: GraphQLObjectType<any, any> = new GraphQLObjectType({
   name: 'Query',
-  fields: () => ({
-    user: {
-      type: person,
-      args: {
-        id: { type: GraphQLNonNull(GraphQLFloat) }
-      },
-      resolve: (_, { id }) => getPerson(id),
-    },
-    users: {
-      type: new GraphQLList(person),
-      args: {
-        sorting: { type: GraphQLNonNull(Sorting) }
-      },
-      resolve: (_, { sorting }) => getPeople(sorting),
-    },
-    order: {
-      type: order,
-      args: {
-        id: { type: GraphQLNonNull(GraphQLFloat) }
-      },
-      resolve: (_, { id }) => getOrderById(id),
-    },
-    orders: {
-      type: new GraphQLList(order),
-      resolve: () => getOrders(),
-    },
-    translation: {
-      type: new GraphQLList(translation),
-      args: {
-        type: { type: GraphQLNonNull(GraphQLList(GraphQLNonNull(WordCategory))) }
-      },
-      resolve: (_, { type }) => getTranslationList(type),
-    }
-  })
+  fields: (): IGraphQLFieldConfigMap => ({
+  ...personResolver,
+  ...orderResolver,
+  ...translationResolver,
+  }),
 })
 
 
