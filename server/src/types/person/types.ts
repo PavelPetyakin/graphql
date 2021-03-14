@@ -19,11 +19,11 @@ export interface IPerson {
   orders?: IOrder[];
 }
 
-interface IUserArgs extends Pick<IPerson, "id"> {}
+export interface IUserArgs extends Pick<IPerson, "id"> {}
 
-interface IAddUserArgs extends Pick<IPerson, "name" | "surname" | "email"> {}
+export interface IAddUserArgs extends Pick<IPerson, "name" | "surname" | "email"> {}
 
-interface IUsersArgs {
+export interface IUsersArgs {
   sorting: {
     sort: {
       ASC: string;

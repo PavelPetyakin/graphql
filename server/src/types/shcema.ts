@@ -1,4 +1,8 @@
-import { GraphQLObjectType, GraphQLSchema } from "graphql";
+import {
+  GraphQLFieldConfigMap,
+  GraphQLObjectType,
+  GraphQLSchema
+} from "graphql";
 import { queryResolver as personQueryResolver, mutationResolver as personMutationResolver } from "./person";
 import { queryResolver as orderResolver } from "./order";
 import { queryResolver as translationResolver } from "./translation";
@@ -15,15 +19,12 @@ export interface IContext {
 export interface IGraphQLFieldConfig<TSource, TArgs> extends GraphQLFieldConfig<TSource, IContext, TArgs> {}
 type Queries = IPersonQueryResolver | IOrderResolver | ITranslationResolver;
 type Mutations = IPersonMutationResolver;
-export type IGraphQLFieldConfigMap<T> = {
+type IGraphQLFieldConfigMap<T> = {
   [Prop in keyof T]: T[Prop];
-}
+} & {[key: string]: any};
 
-// Thunk<GraphQLFieldConfigMap<TSource, TContext>>
-
-export const query: GraphQLObjectType<any, any> = new GraphQLObjectType({
+export const query: GraphQLObjectType<Record<string, string>, IContext> = new GraphQLObjectType({
   name: "Query",
-  // @ts-ignore
   fields: (): IGraphQLFieldConfigMap<Queries> => ({
   ...personQueryResolver,
   ...orderResolver,
@@ -31,7 +32,7 @@ export const query: GraphQLObjectType<any, any> = new GraphQLObjectType({
   }),
 })
 
-export const mutation: GraphQLObjectType<any, any> = new GraphQLObjectType({
+export const mutation: GraphQLObjectType<Record<string, string>, IContext> = new GraphQLObjectType({
   name: "Mutation",
   fields: (): IGraphQLFieldConfigMap<Mutations> => ({
   ...personMutationResolver,

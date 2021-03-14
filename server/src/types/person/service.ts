@@ -1,7 +1,8 @@
-import { IPerson } from "./types";
+import { IPerson, IAddUserArgs, IUsersArgs, IUserArgs } from "./types";
 import { client } from "../../index";
 
-export async function getPeople(sorting: any): Promise<IPerson[]> {
+export async function getPeople(args: IUsersArgs): Promise<IPerson[]> {
+  const { sorting } = args;
   try {
     let qText: string = "SELECT * FROM person ORDER BY created DESC";
     if (sorting) {
@@ -28,7 +29,8 @@ export async function getPeopleAmount(): Promise<number> {
   }
 }
 
-export async function getPerson(id: number): Promise<IPerson> {
+export async function getPerson(args: IUserArgs): Promise<IPerson> {
+  const { id } = args;
   try {
     const qText: string = `
       SELECT
@@ -44,6 +46,20 @@ export async function getPerson(id: number): Promise<IPerson> {
       WHERE "user".id = $1
     `;
     const qValue: number[] = [id];
+    return (await client.query(qText, qValue)).rows[0];
+  } catch (err) {
+    throw new Error("Failed to find person");
+  }
+}
+
+export async function addPerson(args: IAddUserArgs): Promise<IPerson> {
+  const { name, surname, email} = args;
+  try {
+    const qText: string = `
+      INSERT INTO person (name, surname, email)
+      VALUES ($1, $2, $3) RETURNING *
+    `;
+    const qValue: string[] = [name, surname, email];
     return (await client.query(qText, qValue)).rows[0];
   } catch (err) {
     throw new Error("Failed to find person");

@@ -1,4 +1,4 @@
-import { getPeople, getPerson } from "./service";
+import { getPeople, getPerson, addPerson } from "./service";
 import { person, Sorting } from "./pesrson";
 import {
   GraphQLFloat,
@@ -14,14 +14,14 @@ export const queryResolver: IPersonQueryResolver = {
     args: {
       id: { type: GraphQLNonNull(GraphQLFloat) }
     },
-    resolve: (_parent, args): Promise<IPerson> => getPerson(args.id),
+    resolve: (_parent, args): Promise<IPerson> => getPerson(args),
   },
   users: {
     type: new GraphQLList(person),
     args: {
       sorting: { type: GraphQLNonNull(Sorting) }
     },
-    resolve: (_parent, args): Promise<IPerson[]> => getPeople(args.sorting),
+    resolve: (_parent, args): Promise<IPerson[]> => getPeople(args),
   },
 };
 
@@ -33,6 +33,6 @@ export const mutationResolver: IPersonMutationResolver = {
       surname: { type: GraphQLNonNull(GraphQLString) },
       email: { type: GraphQLNonNull(GraphQLString) }
     },
-    resolve: (_parent, args): void => console.log("args", args),
+    resolve: (_parent, args): Promise<IPerson> => addPerson(args),
   },
 };
