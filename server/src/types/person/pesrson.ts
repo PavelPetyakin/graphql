@@ -56,5 +56,8 @@ export const person: GraphQLObjectType = new GraphQLObjectType({
     created: {
       type: GraphQLString,
     },
+    password: {
+      type: GraphQLString,
+    },
   })
 })

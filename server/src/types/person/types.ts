@@ -7,7 +7,8 @@ export interface IPersonQueryResolver {
 }
 
 export interface IPersonMutationResolver {
-  addUser: IGraphQLFieldConfig<Record<string, string>, IAddUserArgs>;
+  register: IGraphQLFieldConfig<Record<string, string>, IRegisterUserArgs>;
+  login: IGraphQLFieldConfig<Record<string, string>, ILoginUserArgs>;
 }
 
 export interface IPerson {
@@ -15,13 +16,28 @@ export interface IPerson {
   name: string;
   surname: string;
   email: string;
+  password: string;
+  roles: Roles[];
+  permissions: Permissions[];
   created: string;
   orders?: IOrder[];
 }
 
+enum Permissions {
+  Admin= "ADMIN",
+  Client= "CLIENT",
+}
+
+enum Roles {
+  Director= "DIRECTOR",
+  Client= "CLIENT",
+}
+
 export interface IUserArgs extends Pick<IPerson, "id"> {}
 
-export interface IAddUserArgs extends Pick<IPerson, "name" | "surname" | "email"> {}
+export interface IRegisterUserArgs extends Pick<IPerson, "name" | "email" | "password"> {}
+
+export interface ILoginUserArgs extends Pick<IPerson, "email" | "password"> {}
 
 export interface IUsersArgs {
   sorting: {

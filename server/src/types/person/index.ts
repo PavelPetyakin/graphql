@@ -1,4 +1,4 @@
-export { getPeople, getPeopleAmount, getPerson, addPerson } from "./service";
+export { getUsers, getPeopleAmount, getUser, registerUser, loginUser } from "./service";
 export { queryResolver, mutationResolver } from "./resolver";
 export { person, Sorting } from "./pesrson";
 export {
@@ -7,5 +7,6 @@ export {
   IPerson,
   IUserArgs,
   IUsersArgs,
-  IAddUserArgs
+  IRegisterUserArgs,
+  ILoginUserArgs,
 } from "./types";

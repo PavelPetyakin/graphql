@@ -1,4 +1,4 @@
-import { getPeople, getPerson, addPerson } from "./service";
+import { getUsers, getUser, registerUser, loginUser } from "./service";
 import { person, Sorting } from "./pesrson";
 import {
   GraphQLFloat,
@@ -14,25 +14,33 @@ export const queryResolver: IPersonQueryResolver = {
     args: {
       id: { type: GraphQLNonNull(GraphQLFloat) }
     },
-    resolve: (_parent, args): Promise<IPerson> => getPerson(args),
+    resolve: (_parent, args): Promise<IPerson> => getUser(args),
   },
   users: {
     type: new GraphQLList(person),
     args: {
       sorting: { type: GraphQLNonNull(Sorting) }
     },
-    resolve: (_parent, args): Promise<IPerson[]> => getPeople(args),
+    resolve: (_parent, args): Promise<IPerson[]> => getUsers(args),
   },
 };
 
 export const mutationResolver: IPersonMutationResolver = {
-  addUser: {
+  register: {
     type: person,
     args: {
       name: { type: GraphQLNonNull(GraphQLString) },
-      surname: { type: GraphQLNonNull(GraphQLString) },
-      email: { type: GraphQLNonNull(GraphQLString) }
+      email: { type: GraphQLNonNull(GraphQLString) },
+      password: { type: GraphQLNonNull(GraphQLString) },
     },
-    resolve: (_parent, args): Promise<IPerson> => addPerson(args),
+    resolve: (_parent, args): Promise<IPerson> => registerUser(args),
+  },
+  login: {
+    type: person,
+    args: {
+      email: { type: GraphQLNonNull(GraphQLString) },
+      password: { type: GraphQLNonNull(GraphQLString) }
+    },
+    resolve: (_parent, args, context): Promise<IPerson | null> => loginUser(args, context),
   },
 };

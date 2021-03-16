@@ -10,6 +10,9 @@ export const client = new Client({
   database: "graphql",
 });
 
+// Проверка токена
+// const payload = jwt.verify(token, ACCESS_TOKEN_SECRET);
+
 // const auth = async ({ request }) => {
 //   let user;
 //   try {
@@ -31,7 +34,7 @@ export const client = new Client({
     await client.connect();
     const server = new ApolloServer({
       schema,
-//     context: ({ req }) => console.log('context', req),
+      context: ({ req, res }) => ({ req, res }),
       playground: true,
     });
     const { url } = await server.listen({

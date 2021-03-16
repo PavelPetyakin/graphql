@@ -1,5 +1,5 @@
+import express from 'express';
 import {
-  GraphQLFieldConfigMap,
   GraphQLObjectType,
   GraphQLSchema
 } from "graphql";
@@ -14,8 +14,10 @@ import { IOrderResolver } from "./order";
 import { ITranslationResolver } from "./translation";
 
 export interface IContext {
-
+  req: express.Request,
+  res: express.Response,
 }
+
 export interface IGraphQLFieldConfig<TSource, TArgs> extends GraphQLFieldConfig<TSource, IContext, TArgs> {}
 type Queries = IPersonQueryResolver | IOrderResolver | ITranslationResolver;
 type Mutations = IPersonMutationResolver;

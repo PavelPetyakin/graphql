@@ -7,8 +7,10 @@ export interface IOrderResolver {
 
 export interface IOrder {
   id: number;
+  // userId: number;
   description: string;
   created: string;
+  // shippingAddress: string;
 }
 
 interface IOrderArgs {
