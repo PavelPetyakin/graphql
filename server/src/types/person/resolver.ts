@@ -30,6 +30,7 @@ export const mutationResolver: IPersonMutationResolver = {
     type: person,
     args: {
       name: { type: GraphQLNonNull(GraphQLString) },
+      surname: { type: GraphQLString },
       email: { type: GraphQLNonNull(GraphQLString) },
       password: { type: GraphQLNonNull(GraphQLString) },
     },
@@ -41,6 +42,6 @@ export const mutationResolver: IPersonMutationResolver = {
       email: { type: GraphQLNonNull(GraphQLString) },
       password: { type: GraphQLNonNull(GraphQLString) }
     },
-    resolve: (_parent, args, context): Promise<IPerson | null> => loginUser(args, context),
+    resolve: (_parent, args, context): Promise<Omit<IPerson, "password"> | null> => loginUser(args, context),
   },
 };

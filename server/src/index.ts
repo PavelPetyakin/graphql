@@ -6,6 +6,7 @@ import { Client } from "pg";
 import { schema } from "./types/shcema";
 import { getUserFromRequest } from "./auth";
 import { IPerson } from "./types/person";
+import { Roles } from "./types/person/types";
 
 export const client = new Client({
   host: "localhost",
@@ -15,48 +16,38 @@ export const client = new Client({
   database: "graphql",
 });
 
-// Проверка токена
-// const payload = jwt.verify(token, ACCESS_TOKEN_SECRET);
-
-// const auth = async ({ request }) => {
-//   let user;
-//   try {
-//     user = await  getUserFromRequest(request);
-//   } catch (e) {
-//     throw new AuthenticationError('You provide incorrect token');
-//   }
-//   const hasRole = (role) => {
-//     if (user && Array.isArray(user.roles)) {
-//       return user.roles.includes(role);
-//     }
-//     return false;
-//   }
-//   return { request, user, hasRole };
-// }
-
-// export type ContextFunction<FunctionParams = any, ProducedContext = object> = (
-//   context: FunctionParams,
-// ) => ValueOrPromise<Context<ProducedContext>>;
-
 (async () => {
   try {
-    const app = express();
-    await client.connect();
-    app.use(cookieParser());
     const server = new ApolloServer({
       schema,
-      context: async (props) => {
-        const { req, res } = props;
-        const user: string | object | null = await getUserFromRequest(req);
-        console.log("context", user);
-        return { req, res }
+      context: async ({ req, res }) => {
+        let user: IPerson | null;
+        try {
+          user = await getUserFromRequest({ req, res });
+        } catch (e) {
+          throw new Error('You provide incorrect token');
+        }
+        if (user) {
+          const hasRole = (role: Roles) => {
+            if (user && Array.isArray(user.roles)) {
+              return user.roles.includes(role);
+            }
+            return false;
+          }
+          console.log("-- 1 --");
+          return { req, res, user, hasRole }
+        }
+        console.log("-- 2 --");
+        return { req, res };
       },
       playground: true,
     });
-
-    server.applyMiddleware({ app });
+    const app = express();
+    await client.connect();
+    app.use(cookieParser());
 
     app.get("/playground", expressPlayground({ endpoint: "/graphql" }))
+    server.applyMiddleware({ app });
     app.listen({ port: 4005 }, () =>
       console.log(`GraphQL Server running 🚀 http://localhost:4005${server.graphqlPath}`)
     );

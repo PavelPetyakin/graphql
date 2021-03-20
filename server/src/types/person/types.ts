@@ -28,14 +28,17 @@ enum Permissions {
   Client= "CLIENT",
 }
 
-enum Roles {
+export enum Roles {
   Director= "DIRECTOR",
   Client= "CLIENT",
 }
 
 export interface IUserArgs extends Pick<IPerson, "id"> {}
 
-export interface IRegisterUserArgs extends Pick<IPerson, "name" | "email" | "password"> {}
+// export interface IRegisterUserArgs extends Pick<IPerson, "name" | "email" | "password" | "surname"> {}
+export interface IRegisterUserArgs extends Pick<IPerson, "name" | "email" | "password"> {
+  surname?: string;
+}
 
 export interface ILoginUserArgs extends Pick<IPerson, "email" | "password"> {}
 
