@@ -40,7 +40,7 @@ export interface IPayload {
   jti: number;
 }
 
-export async function getUserFromRequest(props: IContext): Promise<IPerson | null> {
+export async function getUserFromRequest(props: Pick<IContext, "req" | "res">): Promise<IPerson | null> {
   const { req, res } = props;
   const accessToken = req.cookies['access-token'];
   const refreshToken = req.cookies['refresh-token'];

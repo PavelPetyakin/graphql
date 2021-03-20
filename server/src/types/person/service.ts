@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
-import { createTokens, ITokens } from "../../auth";
+import { createTokens } from "../../auth";
 import { IPerson,
+  IAuth,
   IRegisterUserArgs,
   IUsersArgs,
   IUserArgs,
@@ -9,19 +10,23 @@ import { IPerson,
 import { client } from "../../index";
 import { IContext } from "../shcema";
 
-export async function getUsers(args: IUsersArgs, context: IContext): Promise<IPerson[]> {
+export async function getUsers(args: IUsersArgs, context: IContext): Promise<IPerson[] | null> {
   const { sortBy, sort } = args.sorting;
-  const { req } = context;
-  try {
-    const qText: string = `
+  const { req, user } = context;
+  console.log("getUsers", user)
+  if (user) {
+    try {
+      const qText: string = `
       SELECT id, name, surname, email
       FROM person
       ORDER BY ${sortBy} ${sort}
     `;
-    return (await client.query(qText)).rows;
-  } catch (err) {
-    throw new Error("Failed to select people");
+      return (await client.query(qText)).rows;
+    } catch (err) {
+      throw new Error("Failed to select people");
+    }
   }
+  return null;
 }
 
 export async function getUser(args: IUserArgs): Promise<IPerson> {
@@ -45,7 +50,8 @@ export async function registerUser(args: IRegisterUserArgs): Promise<IPerson> {
   try {
     const qText: string = `
       INSERT INTO person (name, surname, email, password)
-      VALUES ($1, $2, $3, $4) RETURNING *
+      VALUES ($1, $2, $3, $4)
+      RETURNING id, name, surname, email, created
     `;
     const qValue: (string | null)[] = [name, surname, email, hashedPassword];
     return (await client.query(qText, qValue)).rows[0];
@@ -54,7 +60,7 @@ export async function registerUser(args: IRegisterUserArgs): Promise<IPerson> {
   }
 }
 
-export async function loginUser(args: ILoginUserArgs, context: IContext): Promise<Omit<IPerson, "password"> | null> {
+export async function loginUser(args: ILoginUserArgs, context: IContext): Promise<IPerson | null> {
   const { email, password } = args;
   const { res } = context;
   try {
@@ -63,7 +69,7 @@ export async function loginUser(args: ILoginUserArgs, context: IContext): Promis
       WHERE person.email = $1
     `;
     const qValue: string[] = [email];
-    const user: IPerson = (await client.query(qText, qValue)).rows[0];
+    const user: IAuth = (await client.query(qText, qValue)).rows[0];
     if (!user) {
       return null;
     }

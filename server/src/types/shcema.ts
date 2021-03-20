@@ -3,7 +3,11 @@ import {
   GraphQLObjectType,
   GraphQLSchema
 } from "graphql";
-import { queryResolver as personQueryResolver, mutationResolver as personMutationResolver } from "./person";
+import {
+  queryResolver as personQueryResolver,
+  mutationResolver as personMutationResolver,
+  IPerson
+} from "./person";
 import { queryResolver as orderResolver } from "./order";
 import { queryResolver as translationResolver } from "./translation";
 import {
@@ -12,10 +16,13 @@ import {
 import { IPersonQueryResolver, IPersonMutationResolver } from "./person";
 import { IOrderResolver } from "./order";
 import { ITranslationResolver } from "./translation";
+import { Roles } from "./person/types";
 
 export interface IContext {
-  req: express.Request,
-  res: express.Response,
+  req: express.Request;
+  res: express.Response;
+  user: IPerson | null;
+  hasRole?: (role: Roles) => boolean;
 }
 
 export interface IGraphQLFieldConfig<TSource, TArgs> extends GraphQLFieldConfig<TSource, IContext, TArgs> {}

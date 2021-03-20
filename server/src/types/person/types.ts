@@ -11,14 +11,17 @@ export interface IPersonMutationResolver {
   login: IGraphQLFieldConfig<Record<string, string>, ILoginUserArgs>;
 }
 
+export interface IAuth extends IPerson {
+  password: string;
+}
+
 export interface IPerson {
   id: number;
   name: string;
   surname: string;
   email: string;
-  password: string;
-  roles: Roles[];
-  permissions: Permissions[];
+  roles: Roles[]; /** НЕТ В БД */
+  permissions: Permissions[]; /** НЕТ В БД */
   created: string;
   orders?: IOrder[];
 }
@@ -36,11 +39,11 @@ export enum Roles {
 export interface IUserArgs extends Pick<IPerson, "id"> {}
 
 // export interface IRegisterUserArgs extends Pick<IPerson, "name" | "email" | "password" | "surname"> {}
-export interface IRegisterUserArgs extends Pick<IPerson, "name" | "email" | "password"> {
+export interface IRegisterUserArgs extends Pick<IAuth, "name" | "email" | "password"> {
   surname?: string;
 }
 
-export interface ILoginUserArgs extends Pick<IPerson, "email" | "password"> {}
+export interface ILoginUserArgs extends Pick<IAuth, "email" | "password"> {}
 
 export interface IUsersArgs {
   sorting: {

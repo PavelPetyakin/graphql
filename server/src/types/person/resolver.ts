@@ -21,7 +21,7 @@ export const queryResolver: IPersonQueryResolver = {
     args: {
       sorting: { type: GraphQLNonNull(Sorting) }
     },
-    resolve: (_parent, args, context): Promise<IPerson[]> => getUsers(args, context),
+    resolve: (_parent, args, context): Promise<IPerson[] | null> => getUsers(args, context),
   },
 };
 
@@ -42,6 +42,6 @@ export const mutationResolver: IPersonMutationResolver = {
       email: { type: GraphQLNonNull(GraphQLString) },
       password: { type: GraphQLNonNull(GraphQLString) }
     },
-    resolve: (_parent, args, context): Promise<Omit<IPerson, "password"> | null> => loginUser(args, context),
+    resolve: (_parent, args, context): Promise<IPerson | null> => loginUser(args, context),
   },
 };

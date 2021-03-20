@@ -3,7 +3,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import expressPlayground from "graphql-playground-middleware-express";
 import { Client } from "pg";
-import { schema } from "./types/shcema";
+import { IContext, schema } from "./types/shcema";
 import { getUserFromRequest } from "./auth";
 import { IPerson } from "./types/person";
 import { Roles } from "./types/person/types";
@@ -20,15 +20,15 @@ export const client = new Client({
   try {
     const server = new ApolloServer({
       schema,
-      context: async ({ req, res }) => {
-        let user: IPerson | null;
+      context: async ({ req, res }): Promise<IContext> => {
+        let user: IPerson | null = null;
         try {
           user = await getUserFromRequest({ req, res });
         } catch (e) {
           throw new Error('You provide incorrect token');
         }
         if (user) {
-          const hasRole = (role: Roles) => {
+          const hasRole = (role: Roles): boolean => {
             if (user && Array.isArray(user.roles)) {
               return user.roles.includes(role);
             }
@@ -38,7 +38,7 @@ export const client = new Client({
           return { req, res, user, hasRole }
         }
         console.log("-- 2 --");
-        return { req, res };
+        return { req, res, user };
       },
       playground: true,
     });
