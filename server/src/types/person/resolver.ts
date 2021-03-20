@@ -21,7 +21,7 @@ export const queryResolver: IPersonQueryResolver = {
     args: {
       sorting: { type: GraphQLNonNull(Sorting) }
     },
-    resolve: (_parent, args): Promise<IPerson[]> => getUsers(args),
+    resolve: (_parent, args, context): Promise<IPerson[]> => getUsers(args, context),
   },
 };
 

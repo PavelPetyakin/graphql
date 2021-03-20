@@ -1,6 +1,5 @@
 import bcrypt from "bcrypt";
-import { sign } from "jsonwebtoken";
-import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from "../../auth";
+import { createTokens, ITokens } from "../../auth";
 import { IPerson,
   IRegisterUserArgs,
   IUsersArgs,
@@ -10,32 +9,19 @@ import { IPerson,
 import { client } from "../../index";
 import { IContext } from "../shcema";
 
-
-export async function getUsers(args: IUsersArgs): Promise<IPerson[]> {
-  const { sorting } = args;
+export async function getUsers(args: IUsersArgs, context: IContext): Promise<IPerson[]> {
+  const { sortBy, sort } = args.sorting;
+  const { req } = context;
+  console.log("getUsers - req:", req.cookies);
   try {
-    let qText: string = "SELECT * FROM person ORDER BY created DESC";
-    if (sorting) {
-      if (sorting.sortBy && sorting.sort) {
-        qText = `SELECT * FROM person ORDER BY ${sorting.sortBy} ${sorting.sort}`;
-      } else if (sorting.sortBy) {
-        qText = `SELECT * FROM person ORDER BY ${sorting.sortBy}`;
-      } else if (sorting.sort) {
-        qText = `SELECT * FROM person ORDER BY ${sorting.sort}`;
-      }
-    }
+    const qText: string = `
+      SELECT id, name, surname, email
+      FROM person
+      ORDER BY ${sortBy} ${sort}
+    `;
     return (await client.query(qText)).rows;
   } catch (err) {
     throw new Error("Failed to select people");
-  }
-}
-
-export async function getPeopleAmount(): Promise<number> {
-  try {
-    const qText: string = "SELECT count(*) from person";
-    return (await client.query(qText)).rows[0].count;
-  } catch (err) {
-    throw new Error("Failed to amount people");
   }
 }
 
@@ -43,17 +29,9 @@ export async function getUser(args: IUserArgs): Promise<IPerson> {
   const { id } = args;
   try {
     const qText: string = `
-      SELECT
-        "user"."id",
-        "user"."email",
-        "order"."id" AS "order_id",
-        "order"."description",
-        "user"."name",
-        "user"."surname",
-        "user"."created"
-      FROM person AS "user"
-               LEFT JOIN orders AS "order" ON "user".id = "order".person_id
-      WHERE "user".id = $1
+        SELECT id, email, name, surname, created
+        FROM person
+        WHERE id = $1
     `;
     const qValue: number[] = [id];
     return (await client.query(qText, qValue)).rows[0];
@@ -79,7 +57,7 @@ export async function registerUser(args: IRegisterUserArgs): Promise<IPerson> {
 
 export async function loginUser(args: ILoginUserArgs, context: IContext): Promise<IPerson | null> {
   const { email, password } = args;
-  const { req, res } = context;
+  const { res } = context;
   try {
     const qText: string = `
       SELECT * FROM person
@@ -87,29 +65,19 @@ export async function loginUser(args: ILoginUserArgs, context: IContext): Promis
     `;
     const qValue: string[] = [email];
     const user = (await client.query(qText, qValue)).rows[0];
-    if (!user) {
+    const tokens: ITokens | null = await createTokens(user, password);
+    if (!tokens) {
       return null;
     }
-    const valid = await bcrypt.compare(password, user.password);
-    if (!valid) {
-      return null;
-    }
-    const refreshToken = sign(
-      { id: user.id },
-      REFRESH_TOKEN_SECRET,
-      { expiresIn: "7d" }
-    );
-    const accessToken = sign(
-      { id: user.id },
-      ACCESS_TOKEN_SECRET,
-      { expiresIn: "15min" }
-    );
+    const { accessToken, refreshToken } = tokens;
+    console.log("tokens", tokens);
     const curDate: number = new Date().getTime();
-    const endRefreshTokenDate: Date = new Date(curDate + 900);
-    const endAccessTokenDate: Date = new Date(curDate + 604800);
+    const endRefreshTokenDate: Date = new Date(curDate + 900000);
+    const endAccessTokenDate: Date = new Date(curDate + 604800000);
     res.cookie("refresh-token", refreshToken, { expires: endRefreshTokenDate });
     res.cookie("access-token", accessToken, { expires: endAccessTokenDate });
-    return user;
+    const { password: p, ...userWithoutPassword } = user;
+    return userWithoutPassword;
   } catch (err) {
     throw new Error("Failed to find person");
   }

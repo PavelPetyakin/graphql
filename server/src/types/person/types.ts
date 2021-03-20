@@ -41,13 +41,17 @@ export interface ILoginUserArgs extends Pick<IPerson, "email" | "password"> {}
 
 export interface IUsersArgs {
   sorting: {
-    sort: {
-      ASC: string;
-      DESC: string;
-    };
-    sortBy: {
-      id: string;
-      created: Date;
-    };
+    sort: Sort;
+    sortBy: SortBy;
   }
+}
+
+export enum Sort {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+export enum SortBy {
+  ID = "id",
+  CREATED = "id",
 }
