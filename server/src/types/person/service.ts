@@ -1,22 +1,26 @@
 import bcrypt from "bcrypt";
+
 import { createTokens } from "../../auth";
-import { IPerson,
-  IAuth,
-  IRegisterUserArgs,
-  IUsersArgs,
-  IUserArgs,
-  ILoginUserArgs,
-} from "./types";
 import { client } from "../../index";
 import { IContext } from "../shcema";
 
-export async function getUsers(args: IUsersArgs, context: IContext): Promise<IPerson[] | null> {
+import { IAuth,
+  ILoginUserArgs,
+  IPerson,
+  IRegisterUserArgs,
+  IUserArgs,
+  IUsersArgs,
+} from "./types";
+
+export async function getUsers(
+  args: IUsersArgs, context: IContext
+): Promise<IPerson[] | null> {
   const { sortBy, sort } = args.sorting;
-  const { req, user } = context;
+  const { user } = context;
   console.log("getUsers", user)
   if (user) {
     try {
-      const qText: string = `
+      const qText = `
       SELECT id, name, surname, email
       FROM person
       ORDER BY ${sortBy} ${sort}
@@ -32,7 +36,7 @@ export async function getUsers(args: IUsersArgs, context: IContext): Promise<IPe
 export async function getUser(args: IUserArgs): Promise<IPerson> {
   const { id } = args;
   try {
-    const qText: string = `
+    const qText = `
       SELECT id, email, name, surname, created
       FROM person
       WHERE id = $1
@@ -45,26 +49,29 @@ export async function getUser(args: IUserArgs): Promise<IPerson> {
 }
 
 export async function registerUser(args: IRegisterUserArgs): Promise<IPerson> {
-  const { name, email, password, surname=null } = args;
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const { name, email, password, surname = null } = args;
+  const saltOrRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltOrRounds);
   try {
-    const qText: string = `
+    const qText = `
       INSERT INTO person (name, surname, email, password)
       VALUES ($1, $2, $3, $4)
       RETURNING id, name, surname, email, created
     `;
-    const qValue: (string | null)[] = [name, surname, email, hashedPassword];
+    const qValue: (string | null)[] = [ name, surname, email, hashedPassword ];
     return (await client.query(qText, qValue)).rows[0];
   } catch (err) {
-    throw new Error("Failed to find person");
+    throw new Error("Failed to register person");
   }
 }
 
-export async function loginUser(args: ILoginUserArgs, context: IContext): Promise<IPerson | null> {
+export async function loginUser(
+  args: ILoginUserArgs, context: IContext
+): Promise<IPerson | null> {
   const { email, password } = args;
   const { res } = context;
   try {
-    const qText: string = `
+    const qText = `
       SELECT * FROM person
       WHERE person.email = $1
     `;
@@ -94,6 +101,7 @@ export async function loginUser(args: ILoginUserArgs, context: IContext): Promis
         maxAge: 60000,
         httpOnly: true
       });
+    // eslint-disable-next-line no-unused-vars
     const { password: p, ...userWithoutPassword } = user;
     return userWithoutPassword;
   } catch (err) {

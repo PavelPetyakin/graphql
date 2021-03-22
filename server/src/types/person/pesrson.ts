@@ -1,13 +1,13 @@
 import {
-  GraphQLObjectType,
-  GraphQLString,
+  GraphQLEnumType,
+  GraphQLID,
+  GraphQLInputObjectType,
   GraphQLList,
   GraphQLNonNull,
-  GraphQLEnumType,
-  GraphQLInputObjectType,
-  GraphQLID
-} from "graphql";
-import { order, getOrdersByUser } from "../order";
+  GraphQLObjectType,
+  GraphQLString } from "graphql";
+
+import { getOrdersByUser,order } from "../order";
 
 const SortDirection = new GraphQLEnumType({
   name: "sort",

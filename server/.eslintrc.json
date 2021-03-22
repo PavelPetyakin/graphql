@@ -46,9 +46,16 @@
       "error",
       {
         "groups": [
-          ["vendors", "^\\u0000"],
+          ["graphql",
+            "bcrypt",
+            "jsonwebtoken",
+            "apollo-server-express",
+            "cookie-parser",
+            "express",
+            "pg",
+            "^\\u0000"],
           // folders in src
-          ["src", "^api|^assets|^components|^hooks|^layouts|^routers"],
+          ["src", "^types|^auth"],
           ["up deps", "../"],
           ["down deps", "./"]
         ]
@@ -94,6 +101,12 @@
           "regex": "^I[A-Z]",
           "match": true
         }
+      }
+    ],
+    "@typescript-eslint/no-empty-interface": [
+      "warn",
+      {
+        "allowSingleExtends": true
       }
     ],
     "@typescript-eslint/no-magic-numbers": [

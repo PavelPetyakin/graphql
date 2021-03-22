@@ -20,6 +20,6 @@ export enum WordsCategory {
   WEEKDAY = "WEEKDAY"
 }
 
-interface ITranslationArgs {
+export interface ITranslationArgs {
   type: WordsCategory[];
 }

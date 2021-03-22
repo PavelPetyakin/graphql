@@ -1,7 +1,8 @@
-import { getTranslationList } from "./service";
 import { GraphQLList, GraphQLNonNull } from "graphql";
+
+import { getTranslationList } from "./service";
 import { translation, WordCategory } from "./translation";
-import { ITranslationResolver, ITranslation } from "./types";
+import { ITranslation, ITranslationArgs, ITranslationResolver } from "./types";
 
 export const queryResolver: ITranslationResolver = {
   translation: {
@@ -9,6 +10,8 @@ export const queryResolver: ITranslationResolver = {
     args: {
       type: { type: GraphQLNonNull(GraphQLList(GraphQLNonNull(WordCategory))) }
     },
-    resolve: (_parent, args): Promise<ITranslation[]> => getTranslationList(args.type),
+    resolve: (_parent, args: ITranslationArgs): Promise<ITranslation[]> => (
+      getTranslationList(args.type)
+    ),
   },
 };

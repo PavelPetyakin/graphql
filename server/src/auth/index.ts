@@ -1,10 +1,13 @@
 import { sign, verify } from "jsonwebtoken";
+
 import { client } from "../index";
 import { IPerson } from "../types/person";
 import { IContext } from "../types/shcema";
 
 export enum Token {
+  // eslint-disable-next-line max-len
   ACCESS_TOKEN_SECRET = "41c3f602a048dbada4921dec9a98f039ecf3d1b3a72d49504a3857cdccfb81765e534d14ebc3159848b0fff3d248d64410b197aeb4550573382b30f42b5eef2b",
+  // eslint-disable-next-line max-len
   REFRESH_TOKEN_SECRET = "6abdd09bd430ca2d74b808c09acdbc73829573974ed7c22decd7e9d249d2d8a39b1efc0199b1e9256c1b766b0e85da35a40418d60ff8fd7fb03137cf1a20232f",
 }
 
@@ -40,10 +43,12 @@ export interface IPayload {
   jti: number;
 }
 
-export async function getUserFromRequest(props: Pick<IContext, "req" | "res">): Promise<IPerson | null> {
+export async function getUserFromRequest(
+  props: Pick<IContext, "req" | "res">
+): Promise<IPerson | null> {
   const { req, res } = props;
-  const accessToken = req.cookies['access-token'];
-  const refreshToken = req.cookies['refresh-token'];
+  const accessToken = req.cookies["access-token"];
+  const refreshToken = req.cookies["refresh-token"];
 
   if (accessToken) {
     const payload = verify(accessToken, Token.ACCESS_TOKEN_SECRET) as IPayload;
@@ -55,7 +60,7 @@ export async function getUserFromRequest(props: Pick<IContext, "req" | "res">): 
   }
 
   if (refreshToken) {
-    const payload = verify(refreshToken, Token.REFRESH_TOKEN_SECRET) as IPayload;
+    const payload = verify(refreshToken, Token.REFRESH_TOKEN_SECRET)as IPayload;
     const userId = payload?.userId;
     if (userId) {
       const user = await getUserById({ id: userId });
@@ -85,8 +90,10 @@ export async function getUserFromRequest(props: Pick<IContext, "req" | "res">): 
   return null;
 }
 
-async function getUserById({ id }: Pick<IPerson, "id">): Promise<IPerson | null> {
-  const qText: string = `
+async function getUserById(
+  { id }: Pick<IPerson, "id">
+): Promise<IPerson | null> {
+  const qText = `
     SELECT id, email, name, surname, created
     FROM person
     WHERE id = $1

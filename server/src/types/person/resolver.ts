@@ -1,12 +1,13 @@
-import { getUsers, getUser, registerUser, loginUser } from "./service";
-import { person, Sorting } from "./pesrson";
 import {
   GraphQLFloat,
   GraphQLList,
   GraphQLNonNull,
   GraphQLString
 } from "graphql";
-import { IPersonQueryResolver, IPersonMutationResolver, IPerson } from "./types";
+
+import { person, Sorting } from "./pesrson";
+import { getUser, getUsers, loginUser,registerUser } from "./service";
+import { IPerson,IPersonMutationResolver, IPersonQueryResolver } from "./types";
 
 export const queryResolver: IPersonQueryResolver = {
   user: {
@@ -21,7 +22,9 @@ export const queryResolver: IPersonQueryResolver = {
     args: {
       sorting: { type: GraphQLNonNull(Sorting) }
     },
-    resolve: (_parent, args, context): Promise<IPerson[] | null> => getUsers(args, context),
+    resolve: (_parent, args, context): Promise<IPerson[] | null> => (
+      getUsers(args, context)
+    ),
   },
 };
 
@@ -42,6 +45,8 @@ export const mutationResolver: IPersonMutationResolver = {
       email: { type: GraphQLNonNull(GraphQLString) },
       password: { type: GraphQLNonNull(GraphQLString) }
     },
-    resolve: (_parent, args, context): Promise<IPerson | null> => loginUser(args, context),
+    resolve: (_parent, args, context): Promise<IPerson | null> => (
+      loginUser(args, context)
+    ),
   },
 };

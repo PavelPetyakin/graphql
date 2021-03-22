@@ -3,9 +3,10 @@ import {
   GraphQLList,
   GraphQLNonNull
 } from "graphql";
-import { getOrders, getOrderById } from "./service";
+
 import { order } from "./order";
-import { IOrderResolver, IOrder } from "./types";
+import { getOrderById,getOrders } from "./service";
+import { IOrder,IOrderResolver } from "./types";
 
 
 export const queryResolver: IOrderResolver = {

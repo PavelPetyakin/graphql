@@ -1,5 +1,5 @@
-import { IGraphQLFieldConfig } from "../shcema";
 import { IOrder } from "../order";
+import { IGraphQLFieldConfig } from "../shcema";
 
 export interface IPersonQueryResolver {
   user: IGraphQLFieldConfig<Record<string, string>, IUserArgs>;
@@ -38,8 +38,8 @@ export enum Roles {
 
 export interface IUserArgs extends Pick<IPerson, "id"> {}
 
-// export interface IRegisterUserArgs extends Pick<IPerson, "name" | "email" | "password" | "surname"> {}
-export interface IRegisterUserArgs extends Pick<IAuth, "name" | "email" | "password"> {
+export interface IRegisterUserArgs
+  extends Pick<IAuth, "name" | "email" | "password"> {
   surname?: string;
 }
 

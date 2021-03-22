@@ -1,12 +1,14 @@
-import { ApolloServer } from "apollo-server-express";
-import express from "express";
-import cookieParser from "cookie-parser";
 import expressPlayground from "graphql-playground-middleware-express";
+import { ApolloServer } from "apollo-server-express";
+import cookieParser from "cookie-parser";
+import express from "express";
 import { Client } from "pg";
-import { IContext, schema } from "./types/shcema";
-import { getUserFromRequest } from "./auth";
+
 import { IPerson } from "./types/person";
 import { Roles } from "./types/person/types";
+import { IContext, schema } from "./types/shcema";
+
+import { getUserFromRequest } from "./auth";
 
 export const client = new Client({
   host: "localhost",
@@ -25,7 +27,7 @@ export const client = new Client({
         try {
           user = await getUserFromRequest({ req, res });
         } catch (e) {
-          throw new Error('You provide incorrect token');
+          throw new Error("You provide incorrect token");
         }
         if (user) {
           const hasRole = (role: Roles): boolean => {

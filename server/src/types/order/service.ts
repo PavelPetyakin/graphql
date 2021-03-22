@@ -1,9 +1,10 @@
-import { IOrder } from "./types";
 import { client } from "../../index";
+
+import { IOrder } from "./types";
 
 export async function getOrders(): Promise<IOrder[]> {
   try {
-    let qText: string = "SELECT * FROM orders ORDER BY created DESC";
+    const qText = "SELECT * FROM orders ORDER BY created DESC";
     return (await client.query(qText)).rows;
   } catch (err) {
     throw new Error("Failed to select orders");
@@ -12,7 +13,7 @@ export async function getOrders(): Promise<IOrder[]> {
 
 export async function getOrderById(id: string): Promise<IOrder> {
   try {
-    const qText: string = "SELECT * FROM orders o WHERE o.id = $1";
+    const qText = "SELECT * FROM orders o WHERE o.id = $1";
     const qValue: string[] = [id];
     return (await client.query(qText, qValue)).rows[0];
   } catch (err) {
@@ -22,7 +23,7 @@ export async function getOrderById(id: string): Promise<IOrder> {
 
 export async function getOrdersByUser(id: string): Promise<IOrder[]> {
   try {
-    const qText: string = "SELECT * FROM orders o WHERE o.person_id = $1";
+    const qText = "SELECT * FROM orders o WHERE o.person_id = $1";
     const qValue: string[] = [id];
     return (await client.query(qText, qValue)).rows;
   } catch (err) {
