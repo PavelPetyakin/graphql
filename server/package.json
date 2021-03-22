@@ -15,15 +15,23 @@
     "prod": "tsc && node dist/index.js"
   },
   "dependencies": {
-    "apollo-server": "^2.21.0",
+    "apollo-server-express": "^2.21.2",
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
     "graphql": "^15.5.0",
-    "graphql-tools": "^7.0.4",
+    "graphql-playground-middleware-express": "^1.7.22",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.5.1",
     "typeorm": "^0.2.31"
   },
   "devDependencies": {
-    "@types/node": "^14.14.31",
-    "@types/pg": "^7.14.10",
+    "@types/bcrypt": "^3.0.0",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/express": "^4.17.11",
+    "@types/jsonwebtoken": "^8.5.1",
+    "@types/node": "^14.14.35",
+    "@types/pg": "^7.14.11",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",

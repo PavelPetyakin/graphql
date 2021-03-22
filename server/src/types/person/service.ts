@@ -1,50 +1,101 @@
-import { IPerson } from "./resolver";
+import bcrypt from "bcrypt";
+import { createTokens } from "../../auth";
+import { IPerson,
+  IAuth,
+  IRegisterUserArgs,
+  IUsersArgs,
+  IUserArgs,
+  ILoginUserArgs,
+} from "./types";
 import { client } from "../../index";
+import { IContext } from "../shcema";
 
-export async function getPeople(parent: any): Promise<IPerson[]> {
-  try {
-    let qText: string = "SELECT * FROM persons ORDER BY created DESC";
-    if (parent && parent.sorting) {
-      if (parent.sorting.sortBy && parent.sorting.sort) {
-        qText = `SELECT * FROM persons ORDER BY ${parent.sorting.sortBy} ${parent.sorting.sort}`;
-      } else if (parent.sorting.sortBy) {
-        qText = `SELECT * FROM persons ORDER BY ${parent.sorting.sortBy}`;
-      } else if (parent.sorting.sort) {
-        qText = `SELECT * FROM persons ORDER BY ${parent.sorting.sort}`;
-      }
+export async function getUsers(args: IUsersArgs, context: IContext): Promise<IPerson[] | null> {
+  const { sortBy, sort } = args.sorting;
+  const { req, user } = context;
+  console.log("getUsers", user)
+  if (user) {
+    try {
+      const qText: string = `
+      SELECT id, name, surname, email
+      FROM person
+      ORDER BY ${sortBy} ${sort}
+    `;
+      return (await client.query(qText)).rows;
+    } catch (err) {
+      throw new Error("Failed to select people");
     }
-    return (await client.query(qText)).rows;
-  } catch (err) {
-    throw new Error("Failed to select people");
   }
+  return null;
 }
 
-export async function getPeopleAmount(): Promise<number> {
-  try {
-    const qText: string = "SELECT count(*) from persons";
-    return (await client.query(qText)).rows[0].count;
-  } catch (err) {
-    throw new Error("Failed to amount people");
-  }
-}
-
-export async function getPerson(parent: {id: string}): Promise<IPerson> {
+export async function getUser(args: IUserArgs): Promise<IPerson> {
+  const { id } = args;
   try {
     const qText: string = `
-      SELECT
-        "user"."id",
-        "user"."email",
-        "order"."id" AS "order_id",
-        "order"."description",
-        "user"."name",
-        "user"."surname",
-        "user"."created"
-      FROM persons AS "user"
-               LEFT JOIN orders AS "order" ON "user".id = "order".person_id
-      WHERE "user".id = $1
+      SELECT id, email, name, surname, created
+      FROM person
+      WHERE id = $1
     `;
-    const qValue: string[] = [parent.id];
+    const qValue: number[] = [id];
     return (await client.query(qText, qValue)).rows[0];
+  } catch (err) {
+    throw new Error("Failed to find person");
+  }
+}
+
+export async function registerUser(args: IRegisterUserArgs): Promise<IPerson> {
+  const { name, email, password, surname=null } = args;
+  const hashedPassword = await bcrypt.hash(password, 10);
+  try {
+    const qText: string = `
+      INSERT INTO person (name, surname, email, password)
+      VALUES ($1, $2, $3, $4)
+      RETURNING id, name, surname, email, created
+    `;
+    const qValue: (string | null)[] = [name, surname, email, hashedPassword];
+    return (await client.query(qText, qValue)).rows[0];
+  } catch (err) {
+    throw new Error("Failed to find person");
+  }
+}
+
+export async function loginUser(args: ILoginUserArgs, context: IContext): Promise<IPerson | null> {
+  const { email, password } = args;
+  const { res } = context;
+  try {
+    const qText: string = `
+      SELECT * FROM person
+      WHERE person.email = $1
+    `;
+    const qValue: string[] = [email];
+    const user: IAuth = (await client.query(qText, qValue)).rows[0];
+    if (!user) {
+      return null;
+    }
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) {
+      return null;
+    }
+    const { accessToken, refreshToken } = createTokens({ id: user.id });
+    res.cookie(
+      "refresh-token",
+      refreshToken,
+      {
+        // maxAge: 604800000,
+        maxAge: 300000,
+        httpOnly: true
+      });
+    res.cookie(
+      "access-token",
+      accessToken,
+      {
+        // maxAge: 900000,
+        maxAge: 60000,
+        httpOnly: true
+      });
+    const { password: p, ...userWithoutPassword } = user;
+    return userWithoutPassword;
   } catch (err) {
     throw new Error("Failed to find person");
   }

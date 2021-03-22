@@ -1,12 +1,23 @@
-import { getOrders, getOrder } from "./service";
+import {
+  GraphQLFloat,
+  GraphQLList,
+  GraphQLNonNull
+} from "graphql";
+import { getOrders, getOrderById } from "./service";
+import { order } from "./order";
+import { IOrderResolver, IOrder } from "./types";
 
-export interface IOrder {
-  id: number;
-  description: string;
-  created: string;
-}
 
-export const resolver = {
-  orders: (): Promise<IOrder[]> => getOrders(),
-  order: (parent: { id: string }): Promise<IOrder> => getOrder(parent),
+export const queryResolver: IOrderResolver = {
+  order: {
+    type: order,
+    args: {
+      id: { type: GraphQLNonNull(GraphQLFloat) }
+    },
+    resolve: (_parent, args): Promise<IOrder> => getOrderById(args.id),
+  },
+  orders: {
+    type: new GraphQLList(order),
+    resolve: (): Promise<IOrder[]> => getOrders(),
+  },
 };

@@ -1,7 +1,12 @@
-import { ApolloServer } from 'apollo-server';
-import { loadFiles } from 'graphql-tools';
-import { resolvers } from './types/resolvers';
-import { Client } from 'pg';
+import { ApolloServer } from "apollo-server-express";
+import express from "express";
+import cookieParser from "cookie-parser";
+import expressPlayground from "graphql-playground-middleware-express";
+import { Client } from "pg";
+import { IContext, schema } from "./types/shcema";
+import { getUserFromRequest } from "./auth";
+import { IPerson } from "./types/person";
+import { Roles } from "./types/person/types";
 
 export const client = new Client({
   host: "localhost",
@@ -11,44 +16,41 @@ export const client = new Client({
   database: "graphql",
 });
 
-// @ts-ignore
-// const typeDefs = await loadFiles('./src/**/**/*.graphql');
-
-// const auth = async ({ request }) => {
-//   let user;
-//   try {
-//     user = await  getUserFromRequest(request);
-//   } catch (e) {
-//     throw new AuthenticationError('You provide incorrect token');
-//   }
-//   const hasRole = (role) => {
-//     if (user && Array.isArray(user.roles)) {
-//       return user.roles.includes(role);
-//     }
-//     return false;
-//   }
-//   return { request, user, hasRole };
-// }
-
 (async () => {
   try {
+    const server = new ApolloServer({
+      schema,
+      context: async ({ req, res }): Promise<IContext> => {
+        let user: IPerson | null = null;
+        try {
+          user = await getUserFromRequest({ req, res });
+        } catch (e) {
+          throw new Error('You provide incorrect token');
+        }
+        if (user) {
+          const hasRole = (role: Roles): boolean => {
+            if (user && Array.isArray(user.roles)) {
+              return user.roles.includes(role);
+            }
+            return false;
+          }
+          console.log("-- 1 --");
+          return { req, res, user, hasRole }
+        }
+        console.log("-- 2 --");
+        return { req, res, user };
+      },
+      playground: true,
+    });
+    const app = express();
     await client.connect();
-    const typeDefs = await loadFiles('./src/**/**/*.graphql');
-    if(typeDefs !== undefined) {
-      const server = new ApolloServer({
-        typeDefs,
-        resolvers,
-//     context: ({ req }) => console.log('context', req),
-        playground: true,
-      });
-      const { url } = await server.listen({
-        port: 4005,
-        endpoint: '/api',
-        playground: '/graphql'
-      });
-      console.log(`🚀  Server ready at ${url}graphql`);
-    }
+    app.use(cookieParser());
 
+    app.get("/playground", expressPlayground({ endpoint: "/graphql" }))
+    server.applyMiddleware({ app });
+    app.listen({ port: 4005 }, () =>
+      console.log(`GraphQL Server running 🚀 http://localhost:4005${server.graphqlPath}`)
+    );
   } catch (e) {
     console.error("Server don't started", e);
   }

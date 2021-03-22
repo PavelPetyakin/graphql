@@ -1,17 +1,47 @@
-import { getPeople, getPeopleAmount, getPerson } from "./service";
-import { IOrder } from "../order/resolver";
+import { getUsers, getUser, registerUser, loginUser } from "./service";
+import { person, Sorting } from "./pesrson";
+import {
+  GraphQLFloat,
+  GraphQLList,
+  GraphQLNonNull,
+  GraphQLString
+} from "graphql";
+import { IPersonQueryResolver, IPersonMutationResolver, IPerson } from "./types";
 
-export interface IPerson {
-  id: number;
-  name?: string;
-  surname?: string;
-  email?: string;
-  created?: string;
-  orders?: IOrder[];
-}
+export const queryResolver: IPersonQueryResolver = {
+  user: {
+    type: person,
+    args: {
+      id: { type: GraphQLNonNull(GraphQLFloat) }
+    },
+    resolve: (_parent, args): Promise<IPerson> => getUser(args),
+  },
+  users: {
+    type: new GraphQLList(person),
+    args: {
+      sorting: { type: GraphQLNonNull(Sorting) }
+    },
+    resolve: (_parent, args, context): Promise<IPerson[] | null> => getUsers(args, context),
+  },
+};
 
-export const resolver = {
-  people: (parent: any): Promise<IPerson[]> => getPeople(parent),
-  amount: (): Promise<number> => getPeopleAmount(),
-  person: (parent: {id: string}): Promise<IPerson> => getPerson(parent),
+export const mutationResolver: IPersonMutationResolver = {
+  register: {
+    type: person,
+    args: {
+      name: { type: GraphQLNonNull(GraphQLString) },
+      surname: { type: GraphQLString },
+      email: { type: GraphQLNonNull(GraphQLString) },
+      password: { type: GraphQLNonNull(GraphQLString) },
+    },
+    resolve: (_parent, args): Promise<IPerson> => registerUser(args),
+  },
+  login: {
+    type: person,
+    args: {
+      email: { type: GraphQLNonNull(GraphQLString) },
+      password: { type: GraphQLNonNull(GraphQLString) }
+    },
+    resolve: (_parent, args, context): Promise<IPerson | null> => loginUser(args, context),
+  },
 };

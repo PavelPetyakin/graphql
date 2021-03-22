@@ -1,4 +1,8 @@
-import { getTranslationList } from "./service";
+import { IGraphQLFieldConfig } from "../shcema";
+
+export interface ITranslationResolver {
+  translation: IGraphQLFieldConfig<Record<string, string>, ITranslationArgs>;
+}
 
 export interface ITranslation {
   id: number;
@@ -16,9 +20,6 @@ export enum WordsCategory {
   WEEKDAY = "WEEKDAY"
 }
 
-export const resolver = {
-  translation: (parent: { type: WordsCategory[] }): Promise<ITranslation[]> => {
-    return getTranslationList(parent);
-  },
-};
-
+interface ITranslationArgs {
+  type: WordsCategory[];
+}
