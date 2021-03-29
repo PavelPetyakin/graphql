@@ -117,7 +117,7 @@
       }
     ],
     "object-curly-spacing": [
-      "error",
+      "warn",
       "always",
       {
         "arraysInObjects": false,

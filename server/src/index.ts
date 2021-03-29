@@ -26,6 +26,7 @@ export const client = new Client({
         let user: IPerson | null = null;
         try {
           user = await getUserFromRequest({ req, res });
+          console.log("user", user)
         } catch (e) {
           throw new Error("You provide incorrect token");
         }

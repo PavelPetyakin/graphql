@@ -1,0 +1,69 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Mutation {
+  login(email: String!, password: String!): Person
+  register(email: String!, name: String!, password: String!, surname: String): Person
+}
+
+"Customer's orders"
+type Order {
+  created: String
+  description: String
+  id: ID!
+}
+
+"Customer"
+type Person {
+  created: String
+  email: String
+  id: ID!
+  name: String
+  orders: [Order]
+  password: String
+  surname: String
+}
+
+type Query {
+  order(id: Float!): Order
+  orders: [Order]
+  translation(type: [WordCategory!]!): [Translation]
+  user(id: Float!): Person
+  users(sorting: sorting!): [Person]
+}
+
+"Dictionary"
+type Translation {
+  english: String!
+  english_example: String
+  id: ID!
+  russian: String!
+  russian_example: String
+  transcription: String!
+  type: WordCategory!
+}
+
+enum WordCategory {
+  ANIMAL
+  TIME
+  WEEKDAY
+}
+
+enum sort {
+  ASC
+  DESC
+}
+
+enum sortBy {
+  created
+  id
+}
+
+input sorting {
+  sort: sort!
+  sortBy: sortBy!
+}
