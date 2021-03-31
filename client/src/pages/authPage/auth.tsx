@@ -1,10 +1,11 @@
 import React, {
-  ReactNodeArray,
   SyntheticEvent,
   useState
 } from "react";
+import { Link } from "react-router-dom";
 
-import { Button, Input, Layout } from "components";
+import { Button, Form, Input, Layout } from "components";
+import { useDocumentTitle } from "hooks";
 
 import { gql, useMutation } from "@apollo/client";
 
@@ -20,7 +21,7 @@ const AUTH = gql`
   }
 `;
 
-interface IState {
+export interface IState {
   login: string;
   password: string;
 }
@@ -31,6 +32,7 @@ const initState = {
 }
 
 export function AuthPage() {
+  useDocumentTitle("Record - Auth");
   const [ authData, setAuthData ] = useState<IState>(initState);
   console.log("authData", authData);
   const [ login, { data }] = useMutation(AUTH);
@@ -70,31 +72,18 @@ export function AuthPage() {
             value={authData.password}
             onChange={handleChange}
           />
-          <p className={s.forgot}>Забыли пароль?</p>
+          <p className={s.forgot}><a href="http://">Забыли пароль?</a></p>
           <Button
             className={s.button}
             name="ВОЙТИ"
             onClick={handleLogin}
           />
+          <p className={s.signup}>
+            У вас ещё нет аккаунта?
+            <Link to="/signup">Зарегистрироваться</Link>
+          </p>
         </Form>
       </div>
     </Layout>
-  )
-}
-
-interface IForm {
-  className?: string
-  children: ReactNodeArray
-}
-
-function Form(props: IForm) {
-  const { className, children } = props;
-  console.log("children", children)
-  return (
-    <form className={className}>
-      {children.map((el) => {
-        return el;
-      })}
-    </form>
   )
 }

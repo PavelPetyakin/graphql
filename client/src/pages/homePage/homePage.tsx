@@ -1,48 +1,26 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
+import { Button, Layout } from "components";
 import { useDocumentTitle } from "hooks";
 
-import { gql, useQuery } from "@apollo/client";
-
-const EXCHANGE_RATES = gql`
-  query tr($types: [String!]!) {
-    translation(type: $types) {
-      english
-      english_example
-      transcription
-      russian
-      russian_example
-    }
-  }
-`;
+import s from "./style.module.css";
 
 export function HomePage(  ) {
   useDocumentTitle("Record");
-  const { loading, error, data } = useQuery(EXCHANGE_RATES, {
-    variables: [ "TIME", "WEEKDAY" ],
-  });
+  const history = useHistory();
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-  console.log("data", data);
-  const { translation } = data;
+  const handleLogin = () => history.push("/auth");
 
   return (
-    <div>
-      HomePage
-      <ul>
-        {translation.map((word: any, index: number) => {
-          return (
-            <li key={index} style={{ marginBottom: "20px" }}>
-              <div>{word.english}</div>
-              <div>{word.english_example}</div>
-              <div>{word.transcription}</div>
-              <div>{word.russian}</div>
-              <div>{word.russian_example}</div>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    <Layout>
+      <div className={s.container}>
+        <div className={s.title}>
+          <h1>Учите Слова Легко!</h1>
+          <p>просто наклейте стикеры на предметы, которые они обозначают</p>
+        </div>
+        <Button name="ВОЙТИ" onClick={handleLogin}/>
+      </div>
+    </Layout>
   )
 }

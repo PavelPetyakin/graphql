@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 650px;
+}
+
+.title h1 {
+    font-size: 64px;
+    font-weight: 400;
+}
+
+.title p {
+    font-size: 30px;
+    font-weight: 400;
+    text-align: center;
+}

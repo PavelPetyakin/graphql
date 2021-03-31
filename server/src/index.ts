@@ -10,6 +10,17 @@ import { IContext, schema } from "./types/shcema";
 
 import { getUserFromRequest } from "./auth";
 
+const corsOptions = {
+  origin: "http://localhost:4000",
+  // origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: "Content-Type,Authorization",
+  // exposedHeaders: [ "Content-Range", "X-Content-Range" ],
+  credentials: true,
+  // preflightContinue: false,
+  optionsSuccessStatus: 200
+}
+
 export const client = new Client({
   host: "localhost",
   port: 5432,
@@ -46,11 +57,11 @@ export const client = new Client({
       playground: true,
     });
     const app = express();
-    await client.connect();
     app.use(cookieParser());
+    await client.connect();
 
-    app.get("/playground", expressPlayground({ endpoint: "/graphql" }))
-    server.applyMiddleware({ app });
+    app.get("/graphql", expressPlayground({ endpoint: "/graphql" }))
+    server.applyMiddleware({ app, cors: corsOptions });
     app.listen({ port: 4005 }, () =>
       console.log(`GraphQL Server running 🚀 http://localhost:4005${server.graphqlPath}`)
     );

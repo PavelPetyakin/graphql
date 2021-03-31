@@ -98,6 +98,6 @@ code {
     monospace;
 }
 
-button, input, label, p, h1, h2, h3, div {
+button, input, label {
     font-family: 'Roboto Slab', 'Roboto', sans-serif;
 }

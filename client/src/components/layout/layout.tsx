@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 import s from "./style.module.css";
 
@@ -11,7 +12,11 @@ export function Layout(props: ILayout) {
 
   return (
     <section className={s.layout}>
-      <h2 className={s.logo}>Word Stickers</h2>
+      <Link to="/">
+        <h2 className={s.logo}>
+          Word Stickers
+        </h2>
+      </Link>
       {children}
     </section>
   )
