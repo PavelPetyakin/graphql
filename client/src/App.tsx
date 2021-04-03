@@ -2,8 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { AboutPage, AuthPage, HomePage, SignupPage } from "pages";
 
-import "./App.css";
-
 export function App() {
   return (
     <Router>

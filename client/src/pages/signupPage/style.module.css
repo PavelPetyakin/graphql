@@ -1,4 +1,6 @@
 .container {
+    --border-color: #F6630F;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
