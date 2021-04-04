@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import { Button, Layout } from "components";
+import { Button, Card, Layout } from "components";
 import { useDocumentTitle } from "hooks";
 
 import s from "./style.module.css";
@@ -19,7 +19,8 @@ export function HomePage(  ) {
           <h1>Учите Слова Легко!</h1>
           <p>просто наклейте стикеры на предметы, которые они обозначают</p>
         </div>
-        <Button name="ВОЙТИ" onClick={handleLogin}/>
+        <Card className={s.card} />
+        <Button className={s.button} name="ВОЙТИ" onClick={handleLogin}/>
       </div>
     </Layout>
   )

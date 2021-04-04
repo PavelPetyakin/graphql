@@ -22,9 +22,9 @@
 }
 
 .forgot {
-    margin: 15px 0;
+    margin: 20px 0 15px 0;
     text-align: right;
-    font-size: 8px;
+    font-size: 10px;
     user-select: none;
     cursor: pointer;
 }
@@ -35,8 +35,8 @@
 }
 
 .signup {
-    margin-top: 15px;
-    font-size: 8px;
+    margin-top: 20px;
+    font-size: 10px;
     text-align: center;
     user-select: none;
 }

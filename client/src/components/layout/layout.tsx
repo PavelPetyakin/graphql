@@ -12,11 +12,13 @@ export function Layout(props: ILayout) {
 
   return (
     <section className={s.layout}>
-      <Link to="/">
-        <h2 className={s.logo}>
-          Word Stickers
-        </h2>
-      </Link>
+      <header id="header">
+        <Link to="/">
+          <h2 className={s.logo}>
+            Word Stickers
+          </h2>
+        </Link>
+      </header>
       {children}
     </section>
   )
