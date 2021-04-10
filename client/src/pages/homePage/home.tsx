@@ -1,16 +1,23 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import { useHistory } from "react-router-dom";
 
 import { Button, Card, Layout } from "components";
-import { useDocumentTitle } from "hooks";
+import { useComponentDidMount,useDocumentTitle } from "hooks";
 
 import s from "./style.module.css";
 
-export function HomePage(  ) {
+export function HomePage() {
   useDocumentTitle("Record");
   const history = useHistory();
+  const isMounted = useComponentDidMount();
+  let header = null;
+  if (isMounted) {
+    header = document.getElementById("header");
+  }
 
-  const handleLogin = () => history.push("/auth");
+  console.log("header", header);
+  console.log("isMount", isMounted);
 
   return (
     <Layout>
@@ -20,8 +27,12 @@ export function HomePage(  ) {
           <p>просто наклейте стикеры на предметы, которые они обозначают</p>
         </div>
         <Card className={s.card} />
-        <Button className={s.button} name="ВОЙТИ" onClick={handleLogin}/>
       </div>
+      {header && ReactDOM.createPortal(
+        <Button
+          name="ВОЙТИ"
+          onClick={() => history.push("/auth")}
+        />, header)}
     </Layout>
   )
 }

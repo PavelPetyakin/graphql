@@ -2,7 +2,7 @@ import React, {
   SyntheticEvent,
   useState
 } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import { Button, Form, Input, Layout } from "components";
 import { useDocumentTitle } from "hooks";
@@ -37,6 +37,7 @@ export function AuthPage() {
   console.log("authData", authData);
   const [ login, { data }] = useMutation(AUTH);
   console.log("data", data)
+
   const handleLogin = () => login({
     variables: {
       email: authData.login,
@@ -57,6 +58,7 @@ export function AuthPage() {
 
   return (
     <Layout>
+      {data?.login?.id ? <Redirect to="/editor"/> :
       <div className={s.container}>
         <Form>
           <Input
@@ -83,7 +85,7 @@ export function AuthPage() {
             <Link to="/signup">Зарегистрироваться</Link>
           </p>
         </Form>
-      </div>
+      </div>}
     </Layout>
   )
 }

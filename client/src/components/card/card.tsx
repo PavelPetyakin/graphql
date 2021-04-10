@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import cx from "classnames";
 
 import { Button } from "components";
@@ -11,6 +12,8 @@ interface ICard {
 
 export function Card(props: ICard) {
   const { className } = props;
+  const history = useHistory();
+  const handleEditor = () => history.push("/editor");
 
   return (
     <div className={cx(s.container, className)}>
@@ -34,7 +37,7 @@ export function Card(props: ICard) {
         <Button
           className={s.button}
           name="Конструктор"
-          onClick={() => undefined}
+          onClick={handleEditor}
         />
       </div>
     </div>

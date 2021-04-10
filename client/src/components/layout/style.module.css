@@ -4,9 +4,33 @@
     overflow: hidden;
 }
 
+.header {
+    display: grid;
+    grid-template-rows: 70px;
+    grid-template-columns: 260px 1fr 1fr 320px;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+}
+
 .logo {
-    position: fixed;
-    top: 20px;
-    left: 40px;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    width: 170px;
+    text-decoration: none;
+    /*position: fixed;*/
+    /*top: 20px;*/
+    /*left: 40px;*/
     color: #282c34;
+}
+
+.button {
+    grid-column-start: -2;
+    grid-column-end: -1;
+    justify-self: end;
+    width: 100px;
+    margin-right: 60px;
 }

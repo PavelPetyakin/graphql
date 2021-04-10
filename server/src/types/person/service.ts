@@ -89,16 +89,16 @@ export async function loginUser(
       "refresh-token",
       refreshToken,
       {
-        // maxAge: 604800000,
-        maxAge: 300000,
+        maxAge: 604800000,
+        // maxAge: 300000,
         httpOnly: true
       });
     res.cookie(
       "access-token",
       accessToken,
       {
-        // maxAge: 900000,
-        maxAge: 60000,
+        maxAge: 900000,
+        // maxAge: 60000,
         httpOnly: true
       });
     // eslint-disable-next-line no-unused-vars
