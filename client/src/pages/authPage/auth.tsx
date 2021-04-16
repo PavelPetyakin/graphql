@@ -28,7 +28,9 @@ export interface IState {
 
 const initState = {
   login: "p@ya.ru",
+  // login: "",
   password: "qwerty123",
+  // password: "",
 }
 
 export function AuthPage() {
@@ -36,7 +38,7 @@ export function AuthPage() {
   const [ authData, setAuthData ] = useState<IState>(initState);
   console.log("authData", authData);
   const [ login, { data }] = useMutation(AUTH);
-  console.log("data", data)
+  console.log("AuthPage - data", data)
 
   const handleLogin = () => login({
     variables: {
@@ -45,7 +47,7 @@ export function AuthPage() {
     },
   });
   const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
-    const type = e.currentTarget?.attributes[0].value;
+    const type = e.currentTarget?.attributes[1].value;
     const { value } = e.currentTarget;
     const obj = { ...authData };
     if (type === "text") {

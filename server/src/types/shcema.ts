@@ -1,22 +1,25 @@
-import express from 'express';
 import {
   GraphQLObjectType,
   GraphQLSchema
 } from "graphql";
 import {
-  queryResolver as personQueryResolver,
-  mutationResolver as personMutationResolver,
-  IPerson
-} from "./person";
-import { queryResolver as orderResolver } from "./order";
-import { queryResolver as translationResolver } from "./translation";
-import {
   GraphQLFieldConfig,
 } from "graphql/type/definition";
-import { IPersonQueryResolver, IPersonMutationResolver } from "./person";
-import { IOrderResolver } from "./order";
-import { ITranslationResolver } from "./translation";
+import express from "express";
+
 import { Roles } from "./person/types";
+
+import { IOrderResolver,queryResolver as orderResolver } from "./order";
+import {
+  IPerson,
+  IPersonMutationResolver,
+  IPersonQueryResolver,
+  mutationResolver as personMutationResolver,
+  queryResolver as personQueryResolver
+} from "./person";
+import {
+  ITranslationResolver,
+  queryResolver as translationResolver } from "./translation";
 
 export interface IContext {
   req: express.Request;

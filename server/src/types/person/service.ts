@@ -33,19 +33,23 @@ export async function getUsers(
   return null;
 }
 
-export async function getUser(args: IUserArgs): Promise<IPerson> {
-  const { id } = args;
-  try {
-    const qText = `
+export async function getUser(
+  context: IContext
+): Promise<IPerson | null> {
+  if (context.user) {
+    try {
+      const qText = `
       SELECT id, email, name, surname, created
       FROM person
       WHERE id = $1
     `;
-    const qValue: number[] = [id];
-    return (await client.query(qText, qValue)).rows[0];
-  } catch (err) {
-    throw new Error("Failed to find person");
+      const qValue: number[] = [context.user.id];
+      return (await client.query(qText, qValue)).rows[0];
+    } catch (err) {
+      throw new Error("Failed to find person");
+    }
   }
+  return null;
 }
 
 export async function registerUser(args: IRegisterUserArgs): Promise<IPerson> {

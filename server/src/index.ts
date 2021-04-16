@@ -37,7 +37,6 @@ export const client = new Client({
         let user: IPerson | null = null;
         try {
           user = await getUserFromRequest({ req, res });
-          console.log("user", user)
         } catch (e) {
           throw new Error("You provide incorrect token");
         }
@@ -48,11 +47,11 @@ export const client = new Client({
             }
             return false;
           }
-          console.log("-- 1 --");
+          console.log("user", user);
           return { req, res, user, hasRole }
         }
-        console.log("-- 2 --");
-        return { req, res, user };
+        console.log("user", user);
+        return { req, res, user: null };
       },
       playground: true,
     });

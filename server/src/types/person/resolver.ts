@@ -1,5 +1,4 @@
 import {
-  GraphQLFloat,
   GraphQLList,
   GraphQLNonNull,
   GraphQLString
@@ -12,10 +11,8 @@ import { IPerson,IPersonMutationResolver, IPersonQueryResolver } from "./types";
 export const queryResolver: IPersonQueryResolver = {
   user: {
     type: person,
-    args: {
-      id: { type: GraphQLNonNull(GraphQLFloat) }
-    },
-    resolve: (_parent, args): Promise<IPerson> => getUser(args),
+    resolve: (_parent, _args, context): Promise<IPerson | null> =>
+      getUser(context),
   },
   users: {
     type: new GraphQLList(person),

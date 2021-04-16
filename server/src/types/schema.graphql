@@ -32,7 +32,7 @@ type Query {
   order(id: Float!): Order
   orders: [Order]
   translation(type: [WordCategory!]!): [Translation]
-  user(id: Float!): Person
+  user: Person
   users(sorting: sorting!): [Person]
 }
 

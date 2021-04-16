@@ -21,16 +21,16 @@
     justify-content: center;
     width: 170px;
     text-decoration: none;
-    /*position: fixed;*/
-    /*top: 20px;*/
-    /*left: 40px;*/
     color: #282c34;
 }
 
-.button {
+.auth {
     grid-column-start: -2;
     grid-column-end: -1;
     justify-self: end;
-    width: 100px;
     margin-right: 60px;
+}
+
+.button {
+    width: 100px;
 }
