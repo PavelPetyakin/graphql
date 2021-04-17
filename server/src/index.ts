@@ -21,12 +21,19 @@ const corsOptions = {
   optionsSuccessStatus: 200
 }
 
+const host = process.env.RECORD_DB_SERVER_HOST || "localhost";
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+const port = process.env.RECORD_DB_SERVER_PORT || 5432;
+const user = process.env.RECORD_DB_USER || "";
+const password = process.env.RECORD_DB_PASSWORD || "";
+const database = process.env.RECORD_DB_NAME || "graphql";
+
 export const client = new Client({
-  host: "localhost",
-  port: 5432,
-  user: "",
-  password: "",
-  database: "graphql",
+  host,
+  port: +port,
+  user,
+  password,
+  database,
 });
 
 (async () => {
