@@ -2,7 +2,7 @@ import { IOrder } from "../order";
 import { IGraphQLFieldConfig } from "../shcema";
 
 export interface IPersonQueryResolver {
-  user: IGraphQLFieldConfig<Record<string, string>, IUserArgs>;
+  me: IGraphQLFieldConfig<Record<string, string>, undefined>;
   users: IGraphQLFieldConfig<Record<string, string>, IUsersArgs>;
 }
 
@@ -20,7 +20,7 @@ export interface IPerson {
   name: string;
   surname: string;
   email: string;
-  roles: Roles[]; /** НЕТ В БД */
+  roles: Roles[];
   permissions: Permissions[]; /** НЕТ В БД */
   created: string;
   orders?: IOrder[];
@@ -35,8 +35,6 @@ export enum Roles {
   Director= "DIRECTOR",
   Client= "CLIENT",
 }
-
-export interface IUserArgs extends Pick<IPerson, "id"> {}
 
 export interface IRegisterUserArgs
   extends Pick<IAuth, "name" | "email" | "password"> {

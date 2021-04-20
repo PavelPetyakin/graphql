@@ -7,7 +7,11 @@ import {
   GraphQLObjectType,
   GraphQLString } from "graphql";
 
-import { getOrdersByUser,order } from "../order";
+import { getOrdersByUser, IOrder, order } from "../order";
+import { IContext } from "../shcema";
+
+import { getUsers } from "./service";
+import { IPerson, IUsersArgs } from "./types";
 
 const SortDirection = new GraphQLEnumType({
   name: "sort",
@@ -33,7 +37,7 @@ export const Sorting = new GraphQLInputObjectType({
   }
 });
 
-export const person: GraphQLObjectType = new GraphQLObjectType({
+export const person: GraphQLObjectType<Record<string, string>, IContext> = new GraphQLObjectType({
   name: "Person",
   description: "Customer",
   fields: () => ({
@@ -51,13 +55,30 @@ export const person: GraphQLObjectType = new GraphQLObjectType({
     },
     orders: {
       type: new GraphQLList(order),
-      resolve: (parent) => getOrdersByUser(parent.id),
+      resolve: (
+        parent,
+        args,
+        context
+      ): Promise<IOrder[]> => getOrdersByUser(parent.id),
     },
     created: {
       type: GraphQLString,
     },
     password: {
       type: GraphQLString,
+    },
+    role: {
+      type: GraphQLList(GraphQLString),
+    },
+    users: {
+      type: new GraphQLList(person),
+      args: {
+        sorting: { type: GraphQLNonNull(Sorting) }
+      },
+      resolve: (
+        parent,
+        args
+      ): Promise<IPerson[]> => getUsers(args as IUsersArgs),
     },
   })
 })

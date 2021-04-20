@@ -54,7 +54,9 @@ export async function getUserFromRequest(
     const payload = verify(accessToken, Token.ACCESS_TOKEN_SECRET) as IPayload;
     const userId = payload?.userId;
     if (userId) {
-      return await getUserById({ id: userId });
+      const x = await getUserById({ id: userId });
+      console.log("user!!!!!!", x)
+      return  x
     }
     return null;
   }
@@ -94,8 +96,8 @@ async function getUserById(
   { id }: Pick<IPerson, "id">
 ): Promise<IPerson | null> {
   const qText = `
-    SELECT id, email, name, surname, created
-    FROM person
+    SELECT id, email, name, surname, created, role
+    FROM graphql.public.person
     WHERE id = $1
   `;
   const qValue: number[] = [id];
