@@ -4,49 +4,38 @@ import {
   GraphQLString
 } from "graphql";
 
-import { getUserFromRequest } from "../../auth";
+import { IContext } from "../shcema";
 
 import { person, Sorting } from "./pesrson";
-import { getUsers, loginUser,registerUser } from "./service";
+import { getUser, getUsers, loginUser,registerUser } from "./service";
 import {
   IPerson,
   IPersonMutationResolver,
-  IPersonQueryResolver,
-  Roles
+  IPersonQueryResolver, IUsersArgs,
 } from "./types";
 
 export const queryResolver: IPersonQueryResolver = {
   me: {
     type: person,
-    resolve: async (_parent, _args, context): Promise<IPerson | null> => {
-      const { res, req } = context;
-      let user: IPerson | null = null;
-      try {
-        user = await getUserFromRequest({ req, res });
-      } catch (e) {
-        throw new Error("You provide incorrect token");
-      }
-      if (user) {
-        const hasRole = (role: Roles): boolean => {
-          if (user && Array.isArray(user.roles)) {
-            return user.roles.includes(role);
-          }
-
-          return false;
-        }
-
-        return user;
-      }
-      return null;
-    }
+    resolve: (
+      _parent,
+      _args,
+      context: IContext,
+    ): Promise<IPerson | null> => (
+      getUser(context)
+    )
   },
   users: {
     type: new GraphQLList(person),
     args: {
       sorting: { type: GraphQLNonNull(Sorting) }
     },
-    resolve: (_parent, args): Promise<IPerson[] | null> => (
-      getUsers(args)
+    resolve: (
+      _parent,
+      args: IUsersArgs,
+      context: IContext,
+    ): Promise<IPerson[] | null> => (
+      getUsers(args, context)
     ),
   },
 };

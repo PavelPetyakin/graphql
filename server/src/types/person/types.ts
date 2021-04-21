@@ -26,13 +26,13 @@ export interface IPerson {
   orders?: IOrder[];
 }
 
-enum Permissions {
+export enum Permissions {
   Admin= "ADMIN",
   Client= "CLIENT",
 }
 
 export enum Roles {
-  Director= "DIRECTOR",
+  Admin= "ADMIN",
   Client= "CLIENT",
 }
 

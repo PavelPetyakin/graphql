@@ -1,4 +1,4 @@
-export { getUsers, registerUser, loginUser } from "./service";
+export { getUser, getUsers, registerUser, loginUser } from "./service";
 export { queryResolver, mutationResolver } from "./resolver";
 export { person, Sorting } from "./pesrson";
 export {
@@ -8,4 +8,5 @@ export {
   IUsersArgs,
   IRegisterUserArgs,
   ILoginUserArgs,
+  Roles,
 } from "./types";

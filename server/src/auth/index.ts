@@ -95,8 +95,10 @@ export async function getUserFromRequest(
 async function getUserById(
   { id }: Pick<IPerson, "id">
 ): Promise<IPerson | null> {
+  // TODO replace database table
+  //  from graphql.public.person to person
   const qText = `
-    SELECT id, email, name, surname, created, role
+    SELECT id, email, name, surname, created, roles
     FROM graphql.public.person
     WHERE id = $1
   `;

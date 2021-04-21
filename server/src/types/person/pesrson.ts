@@ -55,11 +55,8 @@ export const person: GraphQLObjectType<Record<string, string>, IContext> = new G
     },
     orders: {
       type: new GraphQLList(order),
-      resolve: (
-        parent,
-        args,
-        context
-      ): Promise<IOrder[]> => getOrdersByUser(parent.id),
+      resolve: (parent): Promise<IOrder[]> =>
+        getOrdersByUser(parent.id),
     },
     created: {
       type: GraphQLString,
@@ -67,7 +64,7 @@ export const person: GraphQLObjectType<Record<string, string>, IContext> = new G
     password: {
       type: GraphQLString,
     },
-    role: {
+    roles: {
       type: GraphQLList(GraphQLString),
     },
     users: {
@@ -76,9 +73,10 @@ export const person: GraphQLObjectType<Record<string, string>, IContext> = new G
         sorting: { type: GraphQLNonNull(Sorting) }
       },
       resolve: (
-        parent,
-        args
-      ): Promise<IPerson[]> => getUsers(args as IUsersArgs),
+        _parent,
+        args,
+        context: IContext
+      ): Promise<IPerson[] | null> => getUsers(args as IUsersArgs, context),
     },
   })
 })

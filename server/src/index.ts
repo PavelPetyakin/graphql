@@ -4,7 +4,11 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import { Client } from "pg";
 
-import { schema } from "./types/shcema";
+import { IPerson } from "./types/person";
+import { Roles } from "./types/person/types";
+import { IContext, schema } from "./types/shcema";
+
+import { getUserFromRequest } from "./auth";
 
 const corsOptions = {
   origin: "http://localhost:4000",
@@ -36,7 +40,23 @@ export const client = new Client({
   try {
     const server = new ApolloServer({
       schema,
-      context: async ({ req, res }) => ({ req, res }),
+      context: async ({ req, res }): Promise<IContext> => {
+        let user: IPerson | null = null;
+        try {
+          user = await getUserFromRequest({ req, res });
+        } catch (e) {
+          throw new Error("You provide incorrect token");
+        }
+        const hasRole = (role: Roles): boolean => {
+          if (user && Array.isArray(user.roles)) {
+            return user.roles.includes(role);
+          }
+
+          return false;
+        }
+
+        return { req, res, user, hasRole };
+      },
       playground: true,
     });
     const app = express();

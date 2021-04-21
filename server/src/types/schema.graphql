@@ -25,14 +25,16 @@ type Person {
   name: String
   orders: [Order]
   password: String
+  role: [String]
   surname: String
+  users(sorting: sorting!): [Person]
 }
 
 type Query {
+  me: Person
   order(id: Float!): Order
   orders: [Order]
   translation(type: [WordCategory!]!): [Translation]
-  user: Person
   users(sorting: sorting!): [Person]
 }
 

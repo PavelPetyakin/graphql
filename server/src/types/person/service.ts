@@ -4,47 +4,53 @@ import { createTokens } from "../../auth";
 import { client } from "../../index";
 import { IContext } from "../shcema";
 
-import { IAuth,
+import {
+  IAuth,
   ILoginUserArgs,
   IPerson,
   IRegisterUserArgs,
-  IUsersArgs,
+  IUsersArgs, Roles,
 } from "./types";
 
 export async function getUsers(
-  args: IUsersArgs
-): Promise<IPerson[]> {
-  const { sortBy, sort } = args.sorting;
-  try {
-    const qText = `
+  args: IUsersArgs,
+  context: IContext
+): Promise<IPerson[] | null> {
+  console.log("hasRole", context.hasRole && context.hasRole(Roles.Admin));
+  if (context.hasRole && context.hasRole(Roles.Admin)) {
+    const { sortBy, sort } = args.sorting;
+    try {
+      const qText = `
     SELECT id, name, surname, email
     FROM person
     ORDER BY ${sortBy} ${sort}
   `;
-    return (await client.query(qText)).rows;
-  } catch (err) {
-    throw new Error("Failed to select people");
+      return (await client.query(qText)).rows;
+    } catch (err) {
+      throw new Error("Failed to select people");
+    }
   }
+  return null;
 }
 
-// export async function getUser(
-//   context: IContext
-// ): Promise<IPerson | null> {
-//   if (context.user) {
-//     try {
-//       const qText = `
-//       SELECT id, email, name, surname, created, role
-//       FROM graphql.public.person
-//       WHERE id = $1
-//     `;
-//       const qValue: number[] = [context.user.id];
-//       return (await client.query(qText, qValue)).rows[0];
-//     } catch (err) {
-//       throw new Error("Failed to find person");
-//     }
-//   }
-//   return null;
-// }
+export async function getUser(
+  context: IContext
+): Promise<IPerson | null> {
+  if (context.user) {
+    try {
+      const qText = `
+      SELECT id, email, name, surname, created, roles
+      FROM graphql.public.person
+      WHERE id = $1
+    `;
+      const qValue: number[] = [context.user.id];
+      return (await client.query(qText, qValue)).rows[0];
+    } catch (err) {
+      throw new Error("Failed to find person");
+    }
+  }
+  return null;
+}
 
 export async function registerUser(args: IRegisterUserArgs): Promise<IPerson> {
   const { name, email, password, surname = null } = args;
