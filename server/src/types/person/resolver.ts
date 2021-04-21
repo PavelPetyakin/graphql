@@ -4,37 +4,22 @@ import {
   GraphQLString
 } from "graphql";
 
-import { IContext } from "../shcema";
-
 import { person, Sorting } from "./pesrson";
 import { getUser, getUsers, loginUser,registerUser } from "./service";
-import {
-  IPerson,
-  IPersonMutationResolver,
-  IPersonQueryResolver, IUsersArgs,
-} from "./types";
+import { IPerson,IPersonMutationResolver, IPersonQueryResolver } from "./types";
 
 export const queryResolver: IPersonQueryResolver = {
-  me: {
+  user: {
     type: person,
-    resolve: (
-      _parent,
-      _args,
-      context: IContext,
-    ): Promise<IPerson | null> => (
-      getUser(context)
-    )
+    resolve: (_parent, _args, context): Promise<IPerson | null> =>
+      getUser(context),
   },
   users: {
     type: new GraphQLList(person),
     args: {
       sorting: { type: GraphQLNonNull(Sorting) }
     },
-    resolve: (
-      _parent,
-      args: IUsersArgs,
-      context: IContext,
-    ): Promise<IPerson[] | null> => (
+    resolve: (_parent, args, context): Promise<IPerson[] | null> => (
       getUsers(args, context)
     ),
   },

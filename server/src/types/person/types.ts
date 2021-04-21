@@ -2,7 +2,7 @@ import { IOrder } from "../order";
 import { IGraphQLFieldConfig } from "../shcema";
 
 export interface IPersonQueryResolver {
-  me: IGraphQLFieldConfig<Record<string, string>, undefined>;
+  user: IGraphQLFieldConfig<Record<string, string>, undefined>;
   users: IGraphQLFieldConfig<Record<string, string>, IUsersArgs>;
 }
 
