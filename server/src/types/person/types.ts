@@ -9,6 +9,7 @@ export interface IPersonQueryResolver {
 export interface IPersonMutationResolver {
   register: IGraphQLFieldConfig<Record<string, string>, IRegisterUserArgs>;
   login: IGraphQLFieldConfig<Record<string, string>, ILoginUserArgs>;
+  logout: IGraphQLFieldConfig<Record<string, string>, undefined>;
 }
 
 export interface IAuth extends IPerson {

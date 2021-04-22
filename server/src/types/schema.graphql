@@ -5,9 +5,14 @@ schema {
   mutation: Mutation
 }
 
+type AdminQueries {
+  orders: [Order]
+  users(sorting: sorting!): [Person]
+}
+
 type Mutation {
-  login(email: String!, password: String!): Person
-  register(email: String!, name: String!, password: String!, surname: String): Person
+  me: UserMutation
+  viewer: ViewerMutation
 }
 
 "Customer's orders"
@@ -25,17 +30,14 @@ type Person {
   name: String
   orders: [Order]
   password: String
-  role: [String]
+  roles: [String]
   surname: String
   users(sorting: sorting!): [Person]
 }
 
 type Query {
-  me: Person
-  order(id: Float!): Order
-  orders: [Order]
-  translation(type: [WordCategory!]!): [Translation]
-  users(sorting: sorting!): [Person]
+  admin: AdminQueries
+  me: UserQueries
 }
 
 "Dictionary"
@@ -47,6 +49,21 @@ type Translation {
   russian_example: String
   transcription: String!
   type: WordCategory!
+}
+
+type UserMutation {
+  logout: Person
+}
+
+type UserQueries {
+  order(id: Float!): Order
+  translation(type: [WordCategory!]!): [Translation]
+  user: Person
+}
+
+type ViewerMutation {
+  login(email: String!, password: String!): Person
+  register(email: String!, name: String!, password: String!, surname: String): Person
 }
 
 enum WordCategory {

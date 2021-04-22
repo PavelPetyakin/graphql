@@ -5,7 +5,13 @@ import {
 } from "graphql";
 
 import { person, Sorting } from "./pesrson";
-import { getUser, getUsers, loginUser,registerUser } from "./service";
+import {
+  getUser,
+  getUsers,
+  loginUser,
+  logoutUser,
+  registerUser,
+} from "./service";
 import { IPerson,IPersonMutationResolver, IPersonQueryResolver } from "./types";
 
 export const queryResolver: IPersonQueryResolver = {
@@ -44,6 +50,12 @@ export const mutationResolver: IPersonMutationResolver = {
     },
     resolve: (_parent, args, context): Promise<IPerson | null> => (
       loginUser(args, context)
+    ),
+  },
+  logout: {
+    type: person,
+    resolve: (_parent, _args, context): Promise<null> => (
+      logoutUser(context)
     ),
   },
 };

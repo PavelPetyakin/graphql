@@ -54,9 +54,7 @@ export async function getUserFromRequest(
     const payload = verify(accessToken, Token.ACCESS_TOKEN_SECRET) as IPayload;
     const userId = payload?.userId;
     if (userId) {
-      const x = await getUserById({ id: userId });
-      console.log("user!!!!!!", x)
-      return  x
+      return await getUserById({ id: userId });
     }
     return null;
   }

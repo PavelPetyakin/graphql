@@ -112,3 +112,32 @@ export async function loginUser(
     throw new Error("Failed to find person");
   }
 }
+
+export async function logoutUser(
+  context: IContext
+): Promise<null> {
+  const { res } = context;
+  try {
+
+    res.cookie(
+      "refresh-token",
+      "",
+      {
+        maxAge: 604800000,
+        // maxAge: 300000,
+        httpOnly: true
+      });
+    res.cookie(
+      "access-token",
+      "",
+      {
+        maxAge: 900000,
+        // maxAge: 60000,
+        httpOnly: true
+      });
+
+    return null;
+  } catch (err) {
+    throw new Error("Failed logout");
+  }
+}

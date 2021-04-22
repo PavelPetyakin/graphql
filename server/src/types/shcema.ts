@@ -5,12 +5,12 @@ import express from "express";
 import { Roles } from "./person/types";
 
 import {
-  AdminNamespace,
-  IGraphQLFieldConfigMap,
-  MeNamespace,
-  Mutations
+  AdminNamespaceQueries,
+  MeNamespaceMutations,
+  MeNamespaceQueries,
+  ViewerNamespaceMutations,
 } from "./namespaces";
-import { IPerson, mutationResolver as personMutationResolver } from "./person";
+import { IPerson } from "./person";
 
 export interface IContext {
   req: express.Request;
@@ -27,7 +27,7 @@ export const query: GraphQLObjectType<Record<string, string>, IContext> =
     name: "Query",
     fields: () => ({
       me: {
-        type: MeNamespace,
+        type: MeNamespaceQueries,
         resolve: (_, __, context: IContext) => {
           if (context.hasRole && context.hasRole(Roles.Client)) {
             return {};
@@ -36,7 +36,7 @@ export const query: GraphQLObjectType<Record<string, string>, IContext> =
         }
       },
       admin: {
-        type: AdminNamespace,
+        type: AdminNamespaceQueries,
         resolve: (_, __, context: IContext) => {
           if (context.hasRole && context.hasRole(Roles.Admin)) {
             return {};
@@ -50,8 +50,20 @@ export const query: GraphQLObjectType<Record<string, string>, IContext> =
 export const mutation: GraphQLObjectType<Record<string, string>, IContext> =
   new GraphQLObjectType({
     name: "Mutation",
-    fields: (): IGraphQLFieldConfigMap<Mutations> => ({
-    ...personMutationResolver,
+    fields: () => ({
+      me: {
+        type: MeNamespaceMutations,
+        resolve: (_, __, context: IContext) => {
+          if (context.hasRole && context.hasRole(Roles.Client)) {
+            return {};
+          }
+          return null;
+        }
+      },
+      viewer: {
+        type: ViewerNamespaceMutations,
+        resolve: () => ({}),
+      }
     }),
 });
 

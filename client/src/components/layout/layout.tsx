@@ -1,18 +1,31 @@
 import React, { ReactNode } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-import { Button } from "components";
+import { Button, Profile } from "components";
+import { IProfileMenuList } from "components/profile/profile";
 
-import { gql, useQuery } from "@apollo/client";
+import { gql, useMutation,useQuery } from "@apollo/client";
 
 import s from "./style.module.css";
 
 const USER = gql`
   query user {
-    user {
-      id
-      name
-      surname
+    me {
+      user {
+        id
+        name
+        surname
+      }
+    }
+  }
+`;
+
+const LOGOUT = gql`
+  mutation logout {
+    me {
+      logout {
+        id
+      }
     }
   }
 `;
@@ -22,11 +35,14 @@ interface ILayout {
 }
 
 interface IData {
-  user: {
-    name: string;
-    surname: string;
+  me: {
+    user: {
+      name: string;
+      surname: string;
+    }
   }
 }
+
 
 export function Layout(props: ILayout) {
   const { children } = props;
@@ -34,6 +50,20 @@ export function Layout(props: ILayout) {
   const { loading, error, data } = useQuery<IData>(USER, {
     fetchPolicy: "network-only",
   });
+  const [logout] = useMutation(LOGOUT);
+  const handleLogout = () => logout();
+
+  const list: IProfileMenuList[] = [
+    {
+      name: "Заказы",
+      onClick: () => history.push("/signup"),
+    },
+    {
+      name: "Выйти",
+      onClick: handleLogout,
+    },
+  ];
+
   console.log("--Layout--:", loading, error, data)
   return (
     <section className={s.layout}>
@@ -44,17 +74,19 @@ export function Layout(props: ILayout) {
           </h2>
         </Link>
         <div className={s.auth}>
-          {loading || !data?.user && (<Button
+          {loading || !data?.me?.user && (<Button
             className={s.button}
             name="ВОЙТИ"
             onClick={() => history.push("/auth")}
           />)}
-          {!loading && data?.user && (<div>
-            {`${data.user.name} ${data.user.surname}`}
-          </div>)}
+          {!loading && data?.me?.user && (
+            <Profile user={data?.me?.user} buttons={list} />
+          )}
         </div>
       </header>
       {children}
     </section>
   )
 }
+
+

@@ -13,10 +13,12 @@ import s from "./style.module.css";
 
 const AUTH = gql`
   mutation login($email: String!, $password: String!) {
-    login (email: $email, password: $password) {
-      id
-      name
-      surname
+    viewer {
+      login (email: $email, password: $password) {
+        id
+        name
+        surname
+      }
     }
   }
 `;
@@ -36,9 +38,7 @@ const initState = {
 export function AuthPage() {
   useDocumentTitle("Record - Auth");
   const [ authData, setAuthData ] = useState<IState>(initState);
-  console.log("authData", authData);
   const [ login, { data }] = useMutation(AUTH);
-  console.log("AuthPage - data", data)
 
   const handleLogin = () => login({
     variables: {
@@ -60,7 +60,7 @@ export function AuthPage() {
 
   return (
     <Layout>
-      {data?.login?.id ? <Redirect to="/editor"/> :
+      {data?.viewer?.login?.id ? <Redirect to="/editor"/> :
       <div className={s.container}>
         <Form>
           <Input

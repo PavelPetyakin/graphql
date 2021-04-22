@@ -1,7 +1,7 @@
 export {
-  MeNamespace,
-  AdminNamespace,
+  MeNamespaceQueries,
+  AdminNamespaceQueries,
+  ViewerNamespaceMutations,
+  MeNamespaceMutations,
   IGraphQLFieldConfigMap,
-  Mutations,
-  Queries
 } from "./namespaces";
