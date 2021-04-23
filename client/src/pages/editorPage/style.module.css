@@ -20,11 +20,14 @@ article {
     grid-column-start: -2;
     grid-column-end: -1;
     background: #FBFBFB;
+    box-shadow: -3px 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.form {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 100px;
-    box-shadow: -3px 0 10px 0 rgba(0, 0, 0, 0.2);
-    /*background: #c8efc4;*/
+    grid-gap: 25px;
 }
 
