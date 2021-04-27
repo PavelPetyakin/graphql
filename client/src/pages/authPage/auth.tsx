@@ -39,7 +39,7 @@ export function AuthPage() {
   useDocumentTitle("Record - Auth");
   const [ authData, setAuthData ] = useState<IState>(initState);
   const [ login, { data }] = useMutation(AUTH);
-
+  console.log("authData", authData)
   const handleLogin = () => login({
     variables: {
       email: authData.login,
@@ -47,15 +47,8 @@ export function AuthPage() {
     },
   });
   const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
-    const type = e.currentTarget?.attributes[1].value;
-    const { value } = e.currentTarget;
-    const obj = { ...authData };
-    if (type === "text") {
-      setAuthData({ ...obj, login: value });
-    }
-    if (type === "password") {
-      setAuthData({ ...obj, password: value });
-    }
+    const { name, value } = e.currentTarget;
+    setAuthData({ ...authData, [name]: value });
   }
 
   return (
@@ -64,6 +57,7 @@ export function AuthPage() {
       <div className={s.container}>
         <Form>
           <Input
+            name="login"
             className={s.login}
             label="Логин"
             type="text"
@@ -71,6 +65,7 @@ export function AuthPage() {
             onChange={handleChange}
           />
           <Input
+            name="password"
             label="Пароль"
             type="password"
             value={authData.password}
@@ -79,7 +74,7 @@ export function AuthPage() {
           <p className={s.forgot}><a href="http://">Забыли пароль?</a></p>
           <Button
             className={s.button}
-            name="ВОЙТИ"
+            text="ВОЙТИ"
             onClick={handleLogin}
           />
           <p className={s.signup}>

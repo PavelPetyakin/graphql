@@ -34,7 +34,7 @@ export function Card(props: ICard) {
         <p>от 1000 рублей</p>
         <Button
           className={s.button}
-          name="Конструктор"
+          text="Конструктор"
           onClick={onClick}
         />
       </div>

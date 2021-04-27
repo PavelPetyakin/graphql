@@ -4,17 +4,18 @@ import cx from "classnames";
 import s from "./style.module.css";
 
 interface IButton {
-  name: string;
-  onClick: () => void;
+  text: string;
+  type?: "submit" | "reset" | "button";
+  onClick?: () => void;
   className?: string;
 }
 
 export function Button(props: IButton) {
-  const { name, onClick, className } = props;
+  const { text, className, ...other } = props;
 
   return (
-    <button className={cx(s.button, className)} onClick={onClick}>
-      {name}
+    <button className={cx(s.button, className)} {...other}>
+      {text}
     </button>
   );
 }

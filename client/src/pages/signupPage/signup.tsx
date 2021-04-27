@@ -14,6 +14,7 @@ export function SignupPage() {
         <Form>
           <Input
             className={s.login}
+            name="login"
             label="Логин"
             type="text"
             value=""
@@ -21,6 +22,7 @@ export function SignupPage() {
           />
           <Input
             className={s.password}
+            name="password"
             label="Пароль"
             type="password"
             value=""
@@ -28,6 +30,7 @@ export function SignupPage() {
           />
           <Input
             className={s.confirmPassword}
+            name="confirmPassword"
             label="Подтверждение пароля"
             type="password"
             value=""
@@ -35,7 +38,7 @@ export function SignupPage() {
           />
           <Button
             className={s.button}
-            name="ЗАРЕГИСТРИРОВАТЬСЯ"
+            text="ЗАРЕГИСТРИРОВАТЬСЯ"
             onClick={() => undefined}
           />
         </Form>

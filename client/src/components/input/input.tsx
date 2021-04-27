@@ -8,8 +8,9 @@ interface IInput {
   className?: string;
   value: number | string;
   type: string;
+  name: string;
   placeholder?: string;
-  onChange: (e: SyntheticEvent<HTMLInputElement>) => void;
+  onChange: (val: SyntheticEvent<HTMLInputElement>) => void;
 }
 
 export function Input(props: IInput) {

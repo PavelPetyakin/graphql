@@ -76,7 +76,7 @@ export function Layout(props: ILayout) {
         <div className={s.auth}>
           {loading || !data?.me?.user && (<Button
             className={s.button}
-            name="ВОЙТИ"
+            text="ВОЙТИ"
             onClick={() => history.push("/auth")}
           />)}
           {!loading && data?.me?.user && (
