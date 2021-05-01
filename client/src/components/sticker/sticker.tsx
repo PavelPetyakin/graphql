@@ -1,4 +1,5 @@
 import React from "react";
+import cx from "classnames";
 
 import s from "./style.module.css";
 
@@ -6,6 +7,7 @@ interface ISticker {
   size: "s" | "m" | "l";
   color: string;
   data: ITranslation;
+  className?: string;
 }
 
 interface ITranslation {
@@ -17,11 +19,14 @@ interface ITranslation {
 }
 
 export function Sticker(props: ISticker) {
-  const { size, color, data } = props;
+  const { size, color, data, className } = props;
 
   if (size === "s") {
     return (
-      <div className={s.sticker} style={{ backgroundColor: color }}>
+      <div
+        className={cx(s.sticker, className)}
+        style={{ backgroundColor: color }}
+      >
         <p className={s.word}>{data.word}</p>
         <p className={s.transcription}>[{data.transcription}]</p>
       </div>
@@ -30,7 +35,10 @@ export function Sticker(props: ISticker) {
 
   if (size === "l") {
     return (
-      <div className={s.sticker} style={{ backgroundColor: color }}>
+      <div
+        className={cx(s.sticker, className)}
+        style={{ backgroundColor: color }}
+      >
         <p className={s.word}>{data.word}</p>
         <p className={s.example}>{data.wordExample}</p>
         <p className={s.transcription}>[{data.transcription}]</p>
@@ -41,7 +49,10 @@ export function Sticker(props: ISticker) {
   }
 
   return (
-    <div className={s.sticker} style={{ backgroundColor: color }}>
+    <div
+      className={cx(s.sticker, className)}
+      style={{ backgroundColor: color }}
+    >
       <p className={s.word}>{data.word}</p>
       <p className={s.transcription}>[{data.transcription}]</p>
       <p className={s.word}>{data.translation}</p>

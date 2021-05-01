@@ -1,7 +1,4 @@
-import React, {
-  SyntheticEvent,
-  useState
-} from "react";
+import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 import { Button, Form, Input, Layout } from "components";
@@ -46,9 +43,8 @@ export function AuthPage() {
       password: authData.password,
     },
   });
-  const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
-    const { name, value } = e.currentTarget;
-    setAuthData({ ...authData, [name]: value });
+  const handleChange = (val: Record<string, string>) => {
+    setAuthData({ ...authData, ...val });
   }
 
   return (

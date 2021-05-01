@@ -10,16 +10,23 @@ interface IInput {
   type: string;
   name: string;
   placeholder?: string;
-  onChange: (val: SyntheticEvent<HTMLInputElement>) => void;
+  onChange: (val: Record<string, string>) => void;
 }
 
 export function Input(props: IInput) {
-  const { label, className="", ...other } = props;
+  const { label, className="", onChange, ...other } = props;
+  const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
+    onChange({ [name]: value });
+  }
 
   const withLabel = (
     <label className={s.label}>
       {label}
-      <input className={cx(s.input, className)} {...other} />
+      <input
+        className={cx(s.input, className)}
+        onChange={handleChange}
+        {...other} />
     </label>
   );
 

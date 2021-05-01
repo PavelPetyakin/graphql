@@ -1,6 +1,5 @@
 import React, {
   FormEvent,
-  SyntheticEvent,
   useContext,
   useState
 } from "react";
@@ -19,8 +18,8 @@ import s from "./style.module.css";
 const defaultColors: string[] = [
   "#FAF00C",
   "#F6630F",
-  "#5DFC36",
-  "#458CF8",
+  "#4ED22D",
+  "#6AA4FC",
   "#C4C4C4",
 ]
 
@@ -28,6 +27,7 @@ const initialValues: Record<string, any> = {
   comment: "Hello!",
   color: "#FAF00C",
   language: "French",
+  font: "Roboto",
 }
 
 const EditorContext = React.createContext({});
@@ -61,21 +61,20 @@ function Editor () {
   return (
     <article>
       <Sticker
+        className={s.sticker}
         size="l"
         color={context.color}
         data={data}
       />
       <p>{context.language}</p>
-      <p>{context.color}</p>
     </article>
   )
 }
 
 function SideMenu() {
 const { context, setContext } = useContext<Record<string, any>>(EditorContext);
-  const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
-    const { name, value } = e.currentTarget;
-    setContext({ ...context, [name]: value })
+  const handleChange = (val: Record<string, string>) => {
+    setContext({ ...context, ...val })
   }
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -88,8 +87,14 @@ const { context, setContext } = useContext<Record<string, any>>(EditorContext);
       <form className={s.form} onSubmit={handleSubmit} >
         <Dropdown
           name="language"
-          label="Шрифт"
+          label="Язык"
           value={context.language}
+          onChange={handleChange}
+        />
+        <Dropdown
+          name="font"
+          label="Шрифт"
+          value={context.font}
           onChange={handleChange}
         />
         <Input
