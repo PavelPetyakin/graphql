@@ -1,9 +1,20 @@
-import React, { FormEvent, SyntheticEvent, useState } from "react";
+import React, {
+  FormEvent,
+  SyntheticEvent,
+  useContext,
+  useState
+} from "react";
 
-import { Button, ColorSelector, Dropdown, Input, Layout } from "components";
+import {
+  Button,
+  ColorSelector,
+  Dropdown,
+  Input,
+  Layout,
+  Sticker
+} from "components";
 
 import s from "./style.module.css";
-
 
 const defaultColors: string[] = [
   "#FAF00C",
@@ -13,34 +24,64 @@ const defaultColors: string[] = [
   "#C4C4C4",
 ]
 
-const initialValues = {
+const initialValues: Record<string, any> = {
   comment: "Hello!",
   color: "#FAF00C",
   language: "French",
 }
 
+const EditorContext = React.createContext({});
+
 export function EditorPage() {
+  const [ context, setContext ] = useState<Record<string, any>>(initialValues);
+  console.log("context:", context);
   return (
     <Layout>
       <div className={s.container}>
-        <article>EditorPage</article>
-        <SideMenu />
+        <EditorContext.Provider value={{ context, setContext }}>
+          <Editor />
+          <SideMenu />
+        </EditorContext.Provider>
       </div>
     </Layout>
   );
 }
 
+const data = {
+  word: "Word",
+  wordExample: "Word example",
+  transcription: "Transcription",
+  translation: "Translation",
+  translationExample: "Translation example",
+}
+
+function Editor () {
+  const { context } = useContext<Record<string, any>>(EditorContext);
+
+  return (
+    <article>
+      <Sticker
+        size="l"
+        color={context.color}
+        data={data}
+      />
+      <p>{context.language}</p>
+      <p>{context.color}</p>
+    </article>
+  )
+}
+
 function SideMenu() {
-  const [ state, setState ] = useState<Record<string, any>>(initialValues);
+const { context, setContext } = useContext<Record<string, any>>(EditorContext);
   const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
-    setState({ ...state, [name]: value })
+    setContext({ ...context, [name]: value })
   }
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("handleSubmit:", e);
   }
-  console.log("state:", state);
+
   return (
     <aside className={s.settings}>
 
@@ -48,21 +89,21 @@ function SideMenu() {
         <Dropdown
           name="language"
           label="Шрифт"
-          value={state.language}
+          value={context.language}
           onChange={handleChange}
         />
         <Input
           name="comment"
           type="text"
           label="Шрифт"
-          value={state.comment}
+          value={context.comment}
           onChange={handleChange}
         />
         <ColorSelector
           name="color"
           label = "Цвет"
           colors = { defaultColors }
-          defaultColor={state.color}
+          checkedColor={context.color}
           onChange={handleChange}
         />
         <div>Размер Стикера</div>

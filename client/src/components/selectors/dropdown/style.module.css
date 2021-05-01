@@ -20,7 +20,11 @@
     user-select: none;
 }
 
-.active, select:focus-visible {
+.active {
+    border-color: #458CF8;
+}
+
+.select:focus-visible {
     border-color: #458CF8;
 }
 
