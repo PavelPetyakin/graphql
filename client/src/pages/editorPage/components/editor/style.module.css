@@ -1,0 +1,19 @@
+.examples {
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    grid-gap: 25px;
+    min-width: 410px;
+    height: auto;
+    padding: 105px 25px 25px 25px;
+    overflow: scroll;
+}
+
+.sticker {
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+}

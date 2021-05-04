@@ -4,10 +4,26 @@
     align-items: center;
     grid-gap: 5px;
     padding: 10px 10px;
-    width: 200px;
+    width: fit-content;
+    max-width: 10cm;
     border-radius: 20px;
     font-weight: 500;
     user-select: none;
+    height: fit-content;
+}
+
+.sticker .word,
+.sticker .example,
+.sticker .transcription {
+    white-space: pre-wrap;
+    overflow: auto;
+    max-width: 9cm;
+    text-align: center;
+}
+
+.sticker .word,
+.sticker .transcription {
+    text-overflow: ellipsis;
 }
 
 .sticker .word {

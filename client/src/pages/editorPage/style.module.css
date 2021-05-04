@@ -1,36 +1,8 @@
 .container {
     display: grid;
     grid-template-rows: 70px auto;
-    grid-template-columns: auto 380px;
+    grid-template-columns: auto 350px;
     width: 100%;
     height: 100%;
     overflow: hidden;
-}
-
-article {
-    grid-row-start: 2;
-    grid-row-end: 3;
-    grid-column-start: 1;
-    grid-column-end: 2;
-}
-
-.settings {
-    grid-row-start: 1;
-    grid-row-end: 3;
-    grid-column-start: -2;
-    grid-column-end: -1;
-    background: #FBFBFB;
-    box-shadow: -3px 0 10px 0 rgba(0, 0, 0, 0.2);
-}
-
-.form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 100px;
-    grid-gap: 25px;
-}
-
-.sticker {
-    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
 }

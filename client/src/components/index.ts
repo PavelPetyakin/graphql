@@ -4,5 +4,5 @@ export { Form } from "./form";
 export { Layout } from "./layout";
 export { Input } from "./input";
 export { Profile } from "./profile";
-export { ColorSelector, Dropdown } from "./selectors";
+export { ColorSelector, Dropdown, SizeSelector } from "./selectors";
 export { Sticker } from "./sticker";

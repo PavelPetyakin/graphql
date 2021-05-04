@@ -7,10 +7,14 @@
 .header {
     display: grid;
     grid-template-rows: 70px;
-    grid-template-columns: 260px 1fr 1fr 380px;
+    grid-template-columns: 260px 1fr 1fr 350px;
     align-items: center;
     position: absolute;
     width: 100%;
+    background: rgba(251, 251, 251, 0.5);
+    -webkit-backdrop-filter: saturate(180%) blur(25px);
+    backdrop-filter: saturate(180%) blur(25px);
+    box-shadow: 0 5px 15px 1px rgba(0, 0, 0, 0.2);
 }
 
 .logo {

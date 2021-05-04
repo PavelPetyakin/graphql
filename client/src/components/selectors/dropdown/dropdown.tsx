@@ -1,4 +1,5 @@
-import React, { SyntheticEvent, useState } from "react";
+import React from "react";
+import Select from "react-select";
 import cx from "classnames";
 
 import s from "./style.module.css";
@@ -6,53 +7,43 @@ import s from "./style.module.css";
 interface IDropdown {
   label?: string;
   name: string;
-  value: string;
+  value: { value: string, label: string };
   className?: string;
   onChange: (val: Record<string, string>) => void;
+  options: { value: string, label: string }[];
 }
 
+const customStyles = {
+  control: (_: any, selectProps: any) => ({
+    display: "flex",
+    width: "240px",
+    height: "42px",
+    borderWidth: "1px",
+    borderStyle: "solid",
+    borderColor: selectProps.isFocused ? "#458CF8" : "#FAF00C",
+    borderRadius: "5px",
+    boxShadow: "0 3px 5px 0 rgba(0,0,0,0.2)",
+  }),
+}
+
+
 export function Dropdown(props: IDropdown) {
-  // eslint-disable-next-line no-unused-vars
-  const { label, name, className, value, onChange, ...other } = props;
-  const [ isShow, setIsShow ] = useState<boolean>(false);
-  const [ selectedValue, setSelectedValue ] =
-    useState<Record<string, string>>({ [name]: value });
-  console.log("selectedValue:", selectedValue)
-  const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
-    setSelectedValue({ [e.currentTarget.name]: e.currentTarget.value })
+  const { label, name, className, value, onChange, options } = props;
+  const handleChange = (value: any, actionMeta: any) => {
+    onChange({ [actionMeta.name]: value })
   }
 
   return (
-    <div className={s.container}>
+    <div className={cx(s.container, className)}>
       {label}
-      <input
-        className={cx(s.select, className, { [s.active]: isShow })}
+      <Select
+        styles={customStyles}
         value={value}
-        readOnly={true}
-        onClick={() => setIsShow(!isShow)}
+        name={name}
+        onChange={handleChange}
+        options={options}
+        isSearchable={false}
       />
-      {isShow && (<div className={s.options}>
-        <label className={s.label}>
-          <span>English</span>
-          <input
-            name={name}
-            type="radio"
-            value="English"
-            onChange={handleChange}
-            {...other}
-          />
-        </label>
-        <label className={s.label}>
-          <span>French</span>
-          <input
-            name={name}
-            type="radio"
-            value="French"
-            onChange={handleChange}
-            {...other}
-          />
-        </label>
-      </div>)}
     </div>
   );
 }

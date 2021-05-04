@@ -32,8 +32,9 @@ export function Card(props: ICard) {
     <div className={cx(s.container, className)}>
       <div className={s.glass}>
         <Sticker
-          size="l"
+          size="Medium"
           color="#FAF00C"
+          fontFamily="Roboto Slab"
           data={data}
         />
       </div>
@@ -42,7 +43,7 @@ export function Card(props: ICard) {
         <ColorSelector
           className={s.colors}
           name="color"
-          colors = { defaultColors }
+          options = { defaultColors }
           checkedColor="#FAF00C"
           onChange={() => undefined}
         />

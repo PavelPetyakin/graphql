@@ -12,7 +12,7 @@ interface IColorSelector {
   className?: string;
 }
 
-export function ColorSelector(props: IColorSelector) {
+export function SizeSelector(props: IColorSelector) {
   const { options, label, checkedColor, className, onChange, name } = props;
   const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
@@ -22,18 +22,19 @@ export function ColorSelector(props: IColorSelector) {
   return (
     <div className={cx(s.container, className)}>
       {label}
-      <div className={s.colors}>
-        {options.map((color: string, index: number) => (
+      <div className={s.sizes}>
+        <div className={s.shadow}/>
+        {options.map((elem: string, index: number) => (
           <label className={s.label} key={index}>
             <input
               className={s.input}
-              value={color}
-              checked={color === checkedColor}
+              value={elem}
+              checked={elem === checkedColor}
               type="radio"
               onChange={handleChange}
               name={name}
             />
-            <div className={s.radio} style={{ backgroundColor: color }} />
+            <div className={s.radio}>{elem}</div>
           </label>
         ))}
       </div>
