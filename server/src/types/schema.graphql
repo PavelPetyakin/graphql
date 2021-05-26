@@ -42,13 +42,13 @@ type Query {
 
 "Dictionary"
 type Translation {
-  english: String!
-  english_example: String
   id: ID!
-  russian: String!
-  russian_example: String
   transcription: String!
+  translation: String!
+  translation_example: String
   type: WordCategory!
+  word: String!
+  word_example: String
 }
 
 type UserMutation {
@@ -57,13 +57,18 @@ type UserMutation {
 
 type UserQueries {
   order(id: Float!): Order
-  translation(type: [WordCategory!]!): [Translation]
+  translation(lang: [Language!]!, type: [WordCategory!]!): [Translation]
   user: Person
 }
 
 type ViewerMutation {
   login(email: String!, password: String!): Person
   register(email: String!, name: String!, password: String!, surname: String): Person
+}
+
+enum Language {
+  EN
+  FR
 }
 
 enum WordCategory {

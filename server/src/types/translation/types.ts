@@ -7,11 +7,11 @@ export interface ITranslationResolver {
 export interface ITranslation {
   id: number;
   type: string;
-  english: string;
+  word: string;
   transcription: string;
-  russian: string;
-  english_example: string;
-  russian_example: string;
+  translation: string;
+  word_example: string;
+  translation_example: string;
 }
 
 export enum WordsCategory {
@@ -20,6 +20,15 @@ export enum WordsCategory {
   WEEKDAY = "WEEKDAY"
 }
 
+export enum Language {
+  EN = "english",
+  FR = "french",
+  RU = "russian",
+  ES = "spanish",
+  DE = "german",
+}
+
 export interface ITranslationArgs {
   type: WordsCategory[];
+  lang: Language[];
 }

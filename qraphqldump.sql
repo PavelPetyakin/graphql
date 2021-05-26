@@ -157,7 +157,7 @@ COPY public.person (id, name, surname, email, created, password) FROM stdin;
 -- Data for Name: translation; Type: TABLE DATA; Schema: public; Owner: pavelpetyakin
 --
 
-COPY public.translation (id, type, english, transcription, russian, english_example, russian_example) FROM stdin;
+COPY public.translation (id, type, english, english_transcription, russian, english_example, russian_example) FROM stdin;
 2	TIME	today	[təˈdeɪ]	сегодня	today is a awesome weather	сегодня потрясающая погода
 1	TIME	day	[deɪ]	день	rainy day	дождливый день
 3	TIME	tomorrow	[təˈmɒrəʊ]	завтра	you know what's apt to happen tomorrow?	ты знаешь, что должно завтра случиться?

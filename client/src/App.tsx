@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { AuthPage, EditorPage, HomePage, SignupPage } from "pages";
+import { AuthPage, EditorPage, HomePage, PrintPage,SignupPage } from "pages";
 
 export function App() {
   return (
@@ -9,6 +9,7 @@ export function App() {
       <Route path='/auth' component={AuthPage} />
       <Route path='/signup' component={SignupPage} />
       <Route path='/editor' component={EditorPage} />
+      <Route path='/print' component={PrintPage} />
     </Router>
   );
 }

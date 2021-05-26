@@ -15,6 +15,17 @@ export const WordCategory = new GraphQLEnumType({
   }
 });
 
+export const Language = new GraphQLEnumType({
+  name: "Language",
+  values: {
+    EN: { value: "english" },
+    FR: { value: "french" },
+    RU: { value: "russian" },
+    ES: { value: "spanish" },
+    DE: { value: "german" },
+  }
+});
+
 export const translation: GraphQLObjectType = new GraphQLObjectType({
   name: "Translation",
   description: "Dictionary",
@@ -25,19 +36,19 @@ export const translation: GraphQLObjectType = new GraphQLObjectType({
     type: {
       type: new GraphQLNonNull(WordCategory),
     },
-    english: {
+    word: {
       type: new GraphQLNonNull(GraphQLString),
     },
     transcription: {
       type: new GraphQLNonNull(GraphQLString),
     },
-    russian: {
+    translation: {
       type: new GraphQLNonNull(GraphQLString),
     },
-    english_example: {
+    word_example: {
       type: GraphQLString,
     },
-    russian_example: {
+    translation_example: {
       type: GraphQLString,
     },
   })

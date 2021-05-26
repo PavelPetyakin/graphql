@@ -9,27 +9,28 @@ interface ISticker {
   fontFamily: string;
   data: ITranslation;
   className?: string;
+  plotter?: boolean;
 }
 
-interface ITranslation {
+export interface ITranslation {
   word: string;
-  wordExample?: string;
+  word_example?: string;
   transcription: string;
   translation?: string;
-  translationExample?: string;
+  translation_example?: string;
 }
 
 export function Sticker(props: ISticker) {
-  const { size, color, fontFamily, data, className } = props;
+  const { size, color, fontFamily, data, className, plotter = false } = props;
 
   if (size === "Small") {
     return (
       <div
-        className={cx(s.sticker, className)}
+        className={cx(s.sticker, className, { [s.plotter]: plotter })}
         style={{ backgroundColor: color }}
       >
         <p className={s.word} style={{ fontFamily }}>{data.word}</p>
-        <p className={s.transcription}>[{data.transcription}]</p>
+        <p className={s.transcription}>{data.transcription}</p>
       </div>
     )
   }
@@ -37,25 +38,25 @@ export function Sticker(props: ISticker) {
   if (size === "Large") {
     return (
       <div
-        className={cx(s.sticker, className)}
+        className={cx(s.sticker, className, { [s.plotter]: plotter })}
         style={{ backgroundColor: color }}
       >
         <p className={s.word} style={{ fontFamily }}>{data.word}</p>
-        <p className={s.example}>{data.wordExample}</p>
-        <p className={s.transcription}>[{data.transcription}]</p>
+        <p className={s.example}>{data.word_example}</p>
+        <p className={s.transcription}>{data.transcription}</p>
         <p className={s.word} style={{ fontFamily }}>{data.translation}</p>
-        <p className={s.example}>{data.translationExample}</p>
+        <p className={s.example}>{data.translation_example}</p>
       </div>
     )
   }
 
   return (
     <div
-      className={cx(s.sticker, className)}
+      className={cx(s.sticker, className, { [s.plotter]: plotter })}
       style={{ backgroundColor: color }}
     >
       <p className={s.word} style={{ fontFamily }}>{data.word}</p>
-      <p className={s.transcription}>[{data.transcription}]</p>
+      <p className={s.transcription}>{data.transcription}</p>
       <p className={s.word} style={{ fontFamily }}>{data.translation}</p>
     </div>
   )

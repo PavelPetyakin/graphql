@@ -27,13 +27,24 @@
 }
 
 .sticker .word {
-    font-size: 24px;
+    font-size: 22px;
 }
 
 .sticker .example {
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .sticker .transcription {
-    font-size: 18px;
+    font-size: 16px;
+}
+
+.plotter {
+    border: 1px solid red;
+    background: none !important;
+}
+
+.plotter > .word,
+.plotter > .transcription,
+.plotter > .example {
+    visibility: hidden;
 }
