@@ -37,10 +37,12 @@ export async function getUser(
   context: IContext
 ): Promise<IPerson | null> {
   if (context.user) {
+    // TODO replace database table
+    //  from graphql.public.person to person
     try {
       const qText = `
       SELECT id, email, name, surname, created, roles
-      FROM graphql.public.person
+      FROM person
       WHERE id = $1
     `;
       const qValue: number[] = [context.user.id];

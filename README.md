@@ -8,7 +8,7 @@ apollo client server
 or
 `pg_dump graphql > graphqldump.sql`
 
-### Restore DataBase Dump
+### Restore DataBase Dump через IDEA
 `pg_restore [OPTION]... [FILE]`
 
-`pg_dump --dbname=test_db graphqldump.sql`
+`pg_restore --dbname=test_db graphqldump.sql`

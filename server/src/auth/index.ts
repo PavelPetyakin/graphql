@@ -97,7 +97,7 @@ async function getUserById(
   //  from graphql.public.person to person
   const qText = `
     SELECT id, email, name, surname, created, roles
-    FROM graphql.public.person
+    FROM person
     WHERE id = $1
   `;
   const qValue: number[] = [id];
