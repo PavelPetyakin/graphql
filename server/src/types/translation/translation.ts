@@ -18,11 +18,11 @@ export const WordCategory = new GraphQLEnumType({
 export const Language = new GraphQLEnumType({
   name: "Language",
   values: {
-    EN: { value: "english" },
-    FR: { value: "french" },
-    RU: { value: "russian" },
-    ES: { value: "spanish" },
-    DE: { value: "german" },
+    en: { value: "english" },
+    fr: { value: "french" },
+    ru: { value: "russian" },
+    es: { value: "spanish" },
+    de: { value: "german" },
   }
 });
 

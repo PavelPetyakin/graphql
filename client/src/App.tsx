@@ -9,7 +9,7 @@ export function App() {
       <Route path='/auth' component={AuthPage} />
       <Route path='/signup' component={SignupPage} />
       <Route path='/editor' component={EditorPage} />
-      <Route path='/print' component={PrintPage} />
+      <Route path='/print/:lang?' component={PrintPage} />
     </Router>
   );
 }

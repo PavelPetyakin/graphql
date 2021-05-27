@@ -67,8 +67,11 @@ type ViewerMutation {
 }
 
 enum Language {
+  DE
   EN
+  ES
   FR
+  RU
 }
 
 enum WordCategory {

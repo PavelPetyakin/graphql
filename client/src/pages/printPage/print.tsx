@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 import { Sticker } from "components";
 import { ITranslation } from "components/sticker/sticker";
@@ -22,6 +23,8 @@ const STICKERS = gql`
 `;
 
 export function PrintPage() {
+  const { lang = "en" } = useParams<any>();
+
   const { data } = useQuery(STICKERS, {
     variables: {
       type: [
@@ -30,13 +33,13 @@ export function PrintPage() {
         "WEEKDAY",
       ],
       lang: [
-        "ES"
+        lang
       ]
     }
   });
 
   if (data === undefined) return null;
-  console.log("data", data)
+
   return (
     <div className={s.container}>
       {data.me.translation.map((tr: ITranslation, index: number) => {

@@ -18,12 +18,10 @@ export async function getTranslationList(
     russian as translation,
     russian_example as translation_example
   `
-  console.log("params", params)
+
   try {
     const qText = `SELECT ${params} from translation ${qValue}`;
-    const translation = (await client.query(qText)).rows;
-    console.log("translation", translation)
-    return translation;
+    return (await client.query(qText)).rows;
   } catch (err) {
     throw new Error("Failed get Translation List");
   }

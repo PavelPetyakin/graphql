@@ -21,7 +21,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: orders; Type: TABLE; Schema: public; Owner: root
+-- Name: orders; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.orders (
@@ -32,10 +32,8 @@ CREATE TABLE public.orders (
 );
 
 
-ALTER TABLE public.orders OWNER TO root;
-
 --
--- Name: person; Type: TABLE; Schema: public; Owner: root
+-- Name: person; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.person (
@@ -49,10 +47,8 @@ CREATE TABLE public.person (
 );
 
 
-ALTER TABLE public.person OWNER TO root;
-
 --
--- Name: person_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+-- Name: person_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.person_id_seq
@@ -63,17 +59,15 @@ CREATE SEQUENCE public.person_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.person_id_seq OWNER TO root;
-
 --
--- Name: person_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+-- Name: person_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.person_id_seq OWNED BY public.person.id;
 
 
 --
--- Name: translation; Type: TABLE; Schema: public; Owner: root
+-- Name: translation; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.translation (
@@ -96,10 +90,8 @@ CREATE TABLE public.translation (
 );
 
 
-ALTER TABLE public.translation OWNER TO root;
-
 --
--- Name: translations_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+-- Name: translations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.translations_id_seq
@@ -111,31 +103,29 @@ CREATE SEQUENCE public.translations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.translations_id_seq OWNER TO root;
-
 --
--- Name: translations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+-- Name: translations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.translations_id_seq OWNED BY public.translation.id;
 
 
 --
--- Name: person id; Type: DEFAULT; Schema: public; Owner: root
+-- Name: person id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.person ALTER COLUMN id SET DEFAULT nextval('public.person_id_seq'::regclass);
 
 
 --
--- Name: translation id; Type: DEFAULT; Schema: public; Owner: root
+-- Name: translation id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.translation ALTER COLUMN id SET DEFAULT nextval('public.translations_id_seq'::regclass);
 
 
 --
--- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.orders (id, description, person_id, created) FROM stdin;
@@ -150,7 +140,7 @@ COPY public.orders (id, description, person_id, created) FROM stdin;
 
 
 --
--- Data for Name: person; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: person; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.person (id, name, surname, email, created, password, roles) FROM stdin;
@@ -166,7 +156,7 @@ COPY public.person (id, name, surname, email, created, password, roles) FROM std
 
 
 --
--- Data for Name: translation; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: translation; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.translation (id, type, english, english_transcription, russian, english_example, russian_example, spanish, spanish_example, spanish_transcription, french, french_example, french_transcription, german, german_example, german_transcription) FROM stdin;
@@ -187,21 +177,21 @@ COPY public.translation (id, type, english, english_transcription, russian, engl
 
 
 --
--- Name: person_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+-- Name: person_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.person_id_seq', 26, true);
 
 
 --
--- Name: translations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+-- Name: translations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.translations_id_seq', 1, true);
 
 
 --
--- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.orders
@@ -209,7 +199,7 @@ ALTER TABLE ONLY public.orders
 
 
 --
--- Name: person persons_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+-- Name: person persons_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.person
@@ -217,7 +207,7 @@ ALTER TABLE ONLY public.person
 
 
 --
--- Name: translation translations_pk; Type: CONSTRAINT; Schema: public; Owner: root
+-- Name: translation translations_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.translation

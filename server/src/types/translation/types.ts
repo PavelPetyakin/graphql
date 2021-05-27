@@ -21,11 +21,11 @@ export enum WordsCategory {
 }
 
 export enum Language {
-  EN = "english",
-  FR = "french",
-  RU = "russian",
-  ES = "spanish",
-  DE = "german",
+  en = "english",
+  fr = "french",
+  ru = "russian",
+  es = "spanish",
+  de = "german",
 }
 
 export interface ITranslationArgs {
