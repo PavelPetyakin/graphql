@@ -1,10 +1,11 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { Sticker } from "components";
 import { ITranslation } from "components/sticker/sticker";
 
 import { gql, useQuery } from "@apollo/client";
+import { getQueryParams } from "utils/queryParametersParser";
 
 import s from "./style.module.css";
 
@@ -23,7 +24,12 @@ const STICKERS = gql`
 `;
 
 export function PrintPage() {
-  const { lang = "en" } = useParams<any>();
+  const { search } = useLocation<any>();
+  const {
+    lang = "en",
+    size = "Large",
+    color = "6AA4FC"
+  } = getQueryParams(search);
 
   const { data } = useQuery(STICKERS, {
     variables: {
@@ -46,8 +52,8 @@ export function PrintPage() {
         return (
           <Sticker
             key={index}
-            size="Large"
-            color="#6AA4FC"
+            size={size as "Small" | "Medium" | "Large"}
+            color={`#${ color }`}
             fontFamily="Roboto Slab"
             data={tr}
           />
