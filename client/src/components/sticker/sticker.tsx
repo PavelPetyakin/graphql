@@ -27,7 +27,7 @@ export function Sticker(props: ISticker) {
     return (
       <div
         className={cx(s.sticker, className, { [s.plotter]: plotter })}
-        style={{ backgroundColor: color }}
+        style={{ backgroundColor: color, borderColor: color }}
       >
         <p className={s.word} style={{ fontFamily }}>{data.word}</p>
         <p className={s.transcription}>{data.transcription}</p>
@@ -39,7 +39,7 @@ export function Sticker(props: ISticker) {
     return (
       <div
         className={cx(s.sticker, className, { [s.plotter]: plotter })}
-        style={{ backgroundColor: color }}
+        style={{ backgroundColor: color, borderColor: color }}
       >
         <p className={s.word} style={{ fontFamily }}>{data.word}</p>
         <p className={s.example}>{data.word_example}</p>
@@ -53,7 +53,7 @@ export function Sticker(props: ISticker) {
   return (
     <div
       className={cx(s.sticker, className, { [s.plotter]: plotter })}
-      style={{ backgroundColor: color }}
+      style={{ backgroundColor: color, borderColor: color }}
     >
       <p className={s.word} style={{ fontFamily }}>{data.word}</p>
       <p className={s.transcription}>{data.transcription}</p>

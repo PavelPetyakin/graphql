@@ -10,6 +10,8 @@
     font-weight: 500;
     user-select: none;
     height: fit-content;
+    border-width: 1px;
+    border-style: solid;
 }
 
 .sticker .word,
@@ -39,7 +41,7 @@
 }
 
 .plotter {
-    border: 1px solid red;
+    border: 1px solid red !important;
     background: none !important;
 }
 

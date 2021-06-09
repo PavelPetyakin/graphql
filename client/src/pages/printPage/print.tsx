@@ -28,7 +28,8 @@ export function PrintPage() {
   const {
     lang = "en",
     size = "Large",
-    color = "6AA4FC"
+    color = "6AA4FC",
+    plotter = false
   } = getQueryParams(search);
 
   const { data } = useQuery(STICKERS, {
@@ -54,6 +55,7 @@ export function PrintPage() {
             key={index}
             size={size as "Small" | "Medium" | "Large"}
             color={`#${ color }`}
+            plotter={plotter as boolean}
             fontFamily="Roboto Slab"
             data={tr}
           />
