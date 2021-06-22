@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Button, Profile } from "components";
 import { IProfileMenuList } from "components/profile/profile";
 
+import { client } from "../../api/client";
 import { gql, useMutation,useQuery } from "@apollo/client";
 
 import s from "./style.module.css";
@@ -64,6 +65,9 @@ export function Layout(props: ILayout) {
     },
   ];
 
+  console.log("--!!!!!!!!!!!!!!!!!!--:", client.readQuery({
+    query: USER,
+  }))
   console.log("--Layout--:", loading, error, data)
   return (
     <section className={s.layout}>

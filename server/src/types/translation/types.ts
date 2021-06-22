@@ -15,9 +15,12 @@ export interface ITranslation {
 }
 
 export enum WordsCategory {
-  TIME = "TIME",
-  ANIMAL = "ANIMAL",
-  WEEKDAY = "WEEKDAY"
+  DAY = "DAY",
+  WEEKDAY = "WEEKDAY",
+  MONTH = "MONTH",
+  YEAR = "YEAR",
+  SEASON = "SEASON",
+  ANIMAL = "ANIMAL"
 }
 
 export enum Language {

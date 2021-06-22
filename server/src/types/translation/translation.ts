@@ -9,9 +9,12 @@ import {
 export const WordCategory = new GraphQLEnumType({
   name: "WordCategory",
   values: {
-    TIME: { value: "TIME" },
-    ANIMAL: { value: "ANIMAL" },
+    DAY: { value: "DAY" },
     WEEKDAY: { value: "WEEKDAY" },
+    MONTH: { value: "MONTH" },
+    YEAR: { value: "YEAR" },
+    SEASON: { value: "SEASON" },
+    ANIMAL: { value: "ANIMAL" },
   }
 });
 

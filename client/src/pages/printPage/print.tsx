@@ -36,8 +36,11 @@ export function PrintPage() {
     variables: {
       type: [
         "ANIMAL",
-        "TIME",
+        "DAY",
         "WEEKDAY",
+        "MONTH",
+        "YEAR",
+        "SEASON",
       ],
       lang: [
         lang
