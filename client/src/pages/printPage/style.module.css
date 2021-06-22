@@ -6,6 +6,9 @@
 
 @media print {
     .container {
+        display: block;
+        width: 100%;
         color: white;
+        position: relative;
     }
 }

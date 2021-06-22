@@ -12,6 +12,16 @@
     height: fit-content;
     border-width: 1px;
     border-style: solid;
+    position: relative;
+}
+
+@media print {
+    .sticker {
+        display: block;
+        float: left;
+        margin: 5px;
+        page-break-inside: avoid;
+    }
 }
 
 .sticker .word,
