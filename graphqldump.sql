@@ -164,6 +164,11 @@ COPY public.translation (id, type, english, english_transcription, russian, engl
 16	MONTH	month	[mʌnθ]	месяц	it was six month ago, after work	это было 6 мес назад после работы	\N	\N	\N	\N	\N	\N	\N	\N	\N
 17	MONTH	january	[ˈʤænjʊərɪ]	январь	he came home in January	он вернулся домой в январе	\N	\N	\N	\N	\N	\N	\N	\N	\N
 18	MONTH	february	[ˈfebrʊərɪ]	февраль	about the middle of February she went in the work	примерно в середине февраля она пошла на работу	\N	\N	\N	\N	\N	\N	\N	\N	\N
+13	WEEKDAY	sunday	[ˈsʌndɪ]	воскресенье	late tomorrow or early Sunday	поздно завтра или рано в воскресенье	domingo	porque el domingo puede que tenga que encargarse de todo	[doˈmiŋɡo]	\N	\N	\N	\N	\N	\N
+36	HUMAN	human	[ˈhjuːmən]	человек	I am human, am I not?	человек я или нет?	\N	\N	\N	\N	\N	\N	\N	\N	\N
+37	HUMAN	girl	[gɜːl]	девочка	she is a beautiful girl	она красивая девушка	\N	\N	\N	\N	\N	\N	\N	\N	\N
+38	HUMAN	boy	[bɔɪ]	мальчик	he is a handsome boy	он красивый мальчик	\N	\N	\N	\N	\N	\N	\N	\N	\N
+39	HUMAN	man	[mæn]	мужчина	what a strange man	какой странный мужчина	\N	\N	\N	\N	\N	\N	\N	\N	\N
 19	MONTH	march	[mɑːʧ]	март	she'll be back around the first of March	она вернется примерно в первого марта	\N	\N	\N	\N	\N	\N	\N	\N	\N
 7	WEEKDAY	monday	[ˈmʌndɪ]	понедельник	i'll tell you all about it on Monday	я тебе все расскажу в понедельник	lunes	Te lo contaré todo el lunes	[ˈlunes]	\N	\N	\N	\N	\N	\N
 8	WEEKDAY	tuesday	[ˈtjuːzdɪ]	вторник	it's Tuesday, you know	ты же знаешь, сегодня вторник	martes	es martes, ya sabes	[ˈmaɾtes]	\N	\N	\N	\N	\N	\N
@@ -171,7 +176,7 @@ COPY public.translation (id, type, english, english_transcription, russian, engl
 9	WEEKDAY	wednesday	[ˈwenzdɪ]	среда	call me on Wednesday	позвоните мне в среду	miércoles	Llámame el miércoles	[ˈmjeɾkoles]	\N	\N	\N	\N	\N	\N
 10	WEEKDAY	thursday	[ˈθɜːzdɪ]	четверг	he'll arrive Thursday night	он приедет в четверг вечером	jueves	llegará el jueves por la noche	[ˈxweβes]	\N	\N	\N	\N	\N	\N
 12	WEEKDAY	saturday	[ˈsætədɪ]	суббота	saturday morning	субботнее утро	sábado	sábado por la mañana	[ˈsaβaðo]	\N	\N	\N	\N	\N	\N
-13	WEEKDAY	sunday	[ˈsʌndɪ]	воскресенье	because sunday he may have to handle everything	потому что в воскресенье ему, возможно, придется все уладить	domingo	porque el domingo puede que tenga que encargarse de todo	[doˈmiŋɡo]	\N	\N	\N	\N	\N	\N
+40	HUMAN	woman	[ˈwʊmən]	женщина	pretty woman	хорошенькая женщина	\N	\N	\N	\N	\N	\N	\N	\N	\N
 14	WEEKDAY	weekdays	[ˈwiːkdeɪz]	будние дни	work during weekdays	работа в будние дни	\N	\N	\N	\N	\N	\N	\N	\N	\N
 20	MONTH	april	[ˈeɪprəl]	апрель	the boat docked at the beginning of April	лодка причалила в начале апреля	\N	\N	\N	\N	\N	\N	\N	\N	\N
 21	MONTH	may	[meɪ]	май	one day in early May	в один из дней в начале мая	\N	\N	\N	\N	\N	\N	\N	\N	\N
@@ -195,6 +200,36 @@ COPY public.translation (id, type, english, english_transcription, russian, engl
 33	SEASON	autumn	[ˈɔːtəm]	осень	summer passed into a hot and fragrant autumn	лето перешло в жаркую и благоухающую осень	\N	\N	\N	\N	\N	\N	\N	\N	\N
 34	SEASON	winter	[ˈwɪntə]	зима	winter is coming	наступает зима	\N	\N	\N	\N	\N	\N	\N	\N	\N
 35	SEASON	season	[siːzn]	сезон	not at this season	не в этом сезоне	\N	\N	\N	\N	\N	\N	\N	\N	\N
+42	FAMILY	grandmother	[ˈgrænmʌðə]	бабушка	my grandmother educated me	моя бабушка воспитала меня	\N	\N	\N	\N	\N	\N	\N	\N	\N
+43	FAMILY	grandfather	[ˈgrændfɑːðə]	дедушка	my grandfather is a doctor	мой дедушка доктор	\N	\N	\N	\N	\N	\N	\N	\N	\N
+44	FAMILY	mother	[ˈmʌðə]	мама	i hear you, Mother	я слышу тебя, мама	\N	\N	\N	\N	\N	\N	\N	\N	\N
+45	FAMILY	father	[ˈfɑːðə]	папа	his father was born in Tver	его отец родился в Твери	\N	\N	\N	\N	\N	\N	\N	\N	\N
+46	FAMILY	son	[sʌn]	сын	my son swam in pool	мой сын плавал в бассейне	\N	\N	\N	\N	\N	\N	\N	\N	\N
+47	FAMILY	daughter	[ˈdɔːtə]	дочь	my daughter will play in the garden	моя дочь будет играть в саду	\N	\N	\N	\N	\N	\N	\N	\N	\N
+48	FAMILY	aunt	[ɑːnt]	тетя	in the garden of the cousin of my aunt	в саду двоюродного брата моей тети	\N	\N	\N	\N	\N	\N	\N	\N	\N
+49	FAMILY	uncle	[ʌŋkl]	дядя	isn't he your uncle?	разве он не твой дядя?	\N	\N	\N	\N	\N	\N	\N	\N	\N
+50	FAMILY	grandson	[ˈgrænsʌn]	внук	how is my delicious little grandson?	как дела у моего любимого внука?	\N	\N	\N	\N	\N	\N	\N	\N	\N
+51	FAMILY	granddaughter	[ˈgrændɔːtə]	внучка	it's about your granddaughter	речь идет о вашей внучке	\N	\N	\N	\N	\N	\N	\N	\N	\N
+52	FAMILY	family	[ˈfæm(ə)lɪ]	семья	this is our family	это наша семья	\N	\N	\N	\N	\N	\N	\N	\N	\N
+41	HUMAN	familiar	[fəˈmɪlɪə]	знакомый	this guy looks kind of familiar	этот парень кажется мне знакомым	\N	\N	\N	\N	\N	\N	\N	\N	\N
+53	HUMAN	friend	[frend]	друг	tell me about your friend	расскажи мне о своем друге	\N	\N	\N	\N	\N	\N	\N	\N	\N
+54	HUMAN	enemy	[ˈenəmɪ]	враг	we share an enemy	у нас общий враг	\N	\N	\N	\N	\N	\N	\N	\N	\N
+55	EDUCATION	education	[edjʊˈkeɪʃn]	образование	my college education was all planned out	мое обучение в колледже было полностью спланировано	\N	\N	\N	\N	\N	\N	\N	\N	\N
+56	EDUCATION	school	[skuːl]	школа	did you never go to school?	вы никогда не ходили в школу?	\N	\N	\N	\N	\N	\N	\N	\N	\N
+57	EDUCATION	university	[juːnɪˈvɜːsɪtɪ]	университет	I've heard of the University	Я слышал об университете	\N	\N	\N	\N	\N	\N	\N	\N	\N
+58	EDUCATION	college	[ˈkɒlɪʤ]	колледж	now there wasn't even college	теперь нет даже колледжа	\N	\N	\N	\N	\N	\N	\N	\N	\N
+59	EDUCATION	teacher	[ˈtiːʧə]	учитель	english teacher	учитель английского языка	\N	\N	\N	\N	\N	\N	\N	\N	\N
+60	EDUCATION	pupil	[pjuːpl]	ученик	clever pupil	умный ученик	\N	\N	\N	\N	\N	\N	\N	\N	\N
+61	EDUCATION	student	[ˈstjuːdənt]	студент	I am a student	Я студент	\N	\N	\N	\N	\N	\N	\N	\N	\N
+62	EDUCATION	pen	[pen]	ручка	she used a fountain pen	она использовала авторучку	\N	\N	\N	\N	\N	\N	\N	\N	\N
+63	EDUCATION	pencil	[pensl]	карандаш	let me get a pencil	дайте мне карандаш	\N	\N	\N	\N	\N	\N	\N	\N	\N
+64	EDUCATION	copybook	[ˈkɔpɪbʊk]	тетрадь	you're welcome to take a look at my copybook	можете заглянуть в мою тетрадь	\N	\N	\N	\N	\N	\N	\N	\N	\N
+65	EDUCATION	pencil box	[pensl][bɒks]	пенал	you broke my pencil box	ты сломал мой пенал	\N	\N	\N	\N	\N	\N	\N	\N	\N
+66	EDUCATION	marker	[ˈmɑːkə]	фломастер	permanent marker	несмываемый фломастер	\N	\N	\N	\N	\N	\N	\N	\N	\N
+67	EDUCATION	textbook	[ˈtekstbʊk]	учебник	history textbook	учебник истории	\N	\N	\N	\N	\N	\N	\N	\N	\N
+68	EDUCATION	guide	[gaɪd]	руководство	washing machine guide	руководство по стиральной машине	\N	\N	\N	\N	\N	\N	\N	\N	\N
+69	EDUCATION	guidelines	[ˈgaɪdlaɪnz]	методические рекомендации	oven guidelines	руководство духовому шкафу	\N	\N	\N	\N	\N	\N	\N	\N	\N
+70	EDUCATION	tutorial	[tjuːˈtɔːrɪəl]	руководство	just do the tutorial	просто следуй руководству	\N	\N	\N	\N	\N	\N	\N	\N	\N
 \.
 
 

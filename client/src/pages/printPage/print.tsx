@@ -41,6 +41,9 @@ export function PrintPage() {
         "MONTH",
         "YEAR",
         "SEASON",
+        "HUMAN",
+        "FAMILY",
+        "EDUCATION",
       ],
       lang: [
         lang

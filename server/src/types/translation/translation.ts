@@ -14,6 +14,9 @@ export const WordCategory = new GraphQLEnumType({
     MONTH: { value: "MONTH" },
     YEAR: { value: "YEAR" },
     SEASON: { value: "SEASON" },
+    HUMAN: { value: "HUMAN" },
+    FAMILY: { value: "FAMILY" },
+    EDUCATION: { value: "EDUCATION" },
     ANIMAL: { value: "ANIMAL" },
   }
 });

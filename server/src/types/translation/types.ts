@@ -20,6 +20,9 @@ export enum WordsCategory {
   MONTH = "MONTH",
   YEAR = "YEAR",
   SEASON = "SEASON",
+  HUMAN = "HUMAN",
+  FAMILY = "FAMILY",
+  EDUCATION = "EDUCATION",
   ANIMAL = "ANIMAL"
 }
 
