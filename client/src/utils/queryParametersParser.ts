@@ -1,4 +1,12 @@
-export function getQueryParams(searchParams: string): {[key: string]: string} {
+interface IQueryParams {
+  lang?: "en";
+  size?: "Large";
+  color?: string;
+  plotter?: boolean;
+  cutter?: boolean;
+}
+
+export function getQueryParams(searchParams: string): IQueryParams {
   const params: {[key: string]: string} = {};
   const vars = searchParams.substring(1).split("&");
 
@@ -7,5 +15,5 @@ export function getQueryParams(searchParams: string): {[key: string]: string} {
     params[key] = value;
   });
 
-  return params;
+  return params as IQueryParams;
 }

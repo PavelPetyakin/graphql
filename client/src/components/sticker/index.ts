@@ -1,1 +1,1 @@
-export { Sticker } from "./sticker";
+export { Sticker, PrintSticker } from "./sticker";

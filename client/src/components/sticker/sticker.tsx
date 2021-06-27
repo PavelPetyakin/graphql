@@ -61,3 +61,17 @@ export function Sticker(props: ISticker) {
     </div>
   )
 }
+
+interface IPrintSticker extends ISticker {
+  cutter: boolean;
+}
+
+export function PrintSticker(props: IPrintSticker) {
+  const { cutter, ...other } = props;
+
+  return (
+    <div className={cx(s.stickerWrap, { [s.cutter]: cutter })}>
+      <Sticker className={cx({ [s.visible]: cutter })} {...other} />
+    </div>
+  )
+}

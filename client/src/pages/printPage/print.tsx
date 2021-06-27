@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 
-import { Sticker } from "components";
+import { PrintSticker } from "components";
 import { ITranslation } from "components/sticker/sticker";
 
 import { gql, useQuery } from "@apollo/client";
@@ -29,7 +29,8 @@ export function PrintPage() {
     lang = "en",
     size = "Large",
     color = "6AA4FC",
-    plotter = false
+    plotter = false,
+    cutter = false
   } = getQueryParams(search);
 
   const { data } = useQuery(STICKERS, {
@@ -57,11 +58,12 @@ export function PrintPage() {
     <div className={s.container}>
       {data.me.translation.map((tr: ITranslation, index: number) => {
         return (
-          <Sticker
+          <PrintSticker
             key={index}
             size={size as "Small" | "Medium" | "Large"}
             color={`#${ color }`}
-            plotter={plotter as boolean}
+            plotter={plotter}
+            cutter={cutter}
             fontFamily="Roboto Slab"
             data={tr}
           />

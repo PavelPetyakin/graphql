@@ -16,11 +16,14 @@
 }
 
 @media print {
-    .sticker {
+    .stickerWrap {
         display: block;
         float: left;
         margin: 5px;
         page-break-inside: avoid;
+        border-width: 1px;
+        border-style: solid;
+        padding: 3px;
     }
 }
 
@@ -58,5 +61,13 @@
 .plotter > .word,
 .plotter > .transcription,
 .plotter > .example {
+    visibility: hidden;
+}
+
+.cutter {
+    border: 1px solid red !important;
+}
+
+.visible {
     visibility: hidden;
 }
