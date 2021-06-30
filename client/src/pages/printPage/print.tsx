@@ -36,15 +36,11 @@ export function PrintPage() {
   const { data } = useQuery(STICKERS, {
     variables: {
       type: [
-        "ANIMAL",
-        "DAY",
-        "WEEKDAY",
-        "MONTH",
-        "YEAR",
-        "SEASON",
-        "HUMAN",
+        "BODY",
         "FAMILY",
-        "EDUCATION",
+        "APPEARANCE",
+        "SENSE",
+        "EMOTION",
       ],
       lang: [
         lang

@@ -9,15 +9,11 @@ import {
 export const WordCategory = new GraphQLEnumType({
   name: "WordCategory",
   values: {
-    DAY: { value: "DAY" },
-    WEEKDAY: { value: "WEEKDAY" },
-    MONTH: { value: "MONTH" },
-    YEAR: { value: "YEAR" },
-    SEASON: { value: "SEASON" },
-    HUMAN: { value: "HUMAN" },
+    BODY: { value: "BODY" },
     FAMILY: { value: "FAMILY" },
-    EDUCATION: { value: "EDUCATION" },
-    ANIMAL: { value: "ANIMAL" },
+    APPEARANCE: { value: "APPEARANCE" },
+    SENSE: { value: "SENSE" },
+    EMOTION: { value: "EMOTION" },
   }
 });
 

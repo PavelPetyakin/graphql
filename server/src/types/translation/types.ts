@@ -15,15 +15,11 @@ export interface ITranslation {
 }
 
 export enum WordsCategory {
-  DAY = "DAY",
-  WEEKDAY = "WEEKDAY",
-  MONTH = "MONTH",
-  YEAR = "YEAR",
-  SEASON = "SEASON",
-  HUMAN = "HUMAN",
+  BODY = "BODY",
   FAMILY = "FAMILY",
-  EDUCATION = "EDUCATION",
-  ANIMAL = "ANIMAL"
+  APPEARANCE = "APPEARANCE",
+  SENSE = "SENSE",
+  EMOTION = "EMOTION",
 }
 
 export enum Language {
